@@ -56,21 +56,30 @@ def show_field_vanila(cell):
 def start_game_2_vanila():
     game = Cell()
     turn = input_promt_fixed("Bi prvi igralec imel križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
-    win = ""  
-    while not game.check_win():
+    win = ""
+    num_turns = 0
+    while not game.check_win() and num_turns < 9:
         show_field_vanila(game)
         inp = int(input_promt_fixed(f"Igralec {turn} je na potezi!", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
         if turn == "X":
             if game.cross(inp):
                 turn = "O"
                 win = "X"
+                num_turns += 1
             else:
                 None
         elif turn == "O":
             if game.nought(inp):
                 turn = "X"
                 win = "O"
+                num_turns += 1
             else:
                 None
     show_field_vanila(game)
-    print(f"čestitke {win}!")
+    if game.check_win():
+         print(f"Čestitke {win}!")
+    else:
+        print("Igra je neodločena.")
+
+
+start_game_2_vanila()
