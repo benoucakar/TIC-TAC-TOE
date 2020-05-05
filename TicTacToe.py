@@ -104,6 +104,7 @@ def start_game_2_vanila():
         print("Igra je neodločena.")
 
 def start_game_2_ultimate():
+    big_celica = Cell()
     celica1 = Cell()
     celica2 = Cell()
     celica3 = Cell()
@@ -127,6 +128,22 @@ def start_game_2_ultimate():
         inp_cell = inp_space
         if cell.winner == "":
             inp_space = int(input_promt_fixed(f"{turn} naj izbere polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+            if turn == "X":
+                if cell.cross(inp_space):
+                    turn = "O"
+                else:
+                    None
+            elif turn == "O":
+                if cell.nought(inp_space):
+                    turn = "X"
+                else:
+                    None
+            
+        elif cell.winner != "":
+            print(f"To polje je že zaključeno. {turn} lahko gre kamorkoli.")
+            inp_cell = int(input_promt_fixed(f"{turn} naj izbere poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+            inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))            
+            cell = game[inp_space]
             if turn == "X":
                 if cell.cross(inp_space):
                     turn = "O"
