@@ -14,6 +14,10 @@ class Cell:
             return True
         else:
             return False
+    def X_graphic(self):
+        self.cells = {1 : "/", 2 : " ", 3 : "\\", 4 : " ", 5 : "X", 6 : " ", 7 : "\\", 8 : " ", 9 : "/"}
+    def O_graphic(self):
+        self.cells = {1 : "\\", 2 : "-", 3 : "/", 4 : "|", 5 : " ", 6 : "|", 7 : "/", 8 : "-", 9 : "\\"}
     def check_win(self):
         if self.cells[1] == self.cells[2] == self.cells[3] and self.cells[1] != ".": #spodnja vrsta
             self.winner = self.cells[1]
@@ -134,7 +138,8 @@ def start_game_2_ultimate():
                     turn = "O"
                     if cell.check_win():
                         master_celica.cross(inp_cell)
-                        num_turns += 1                         
+                        num_turns += 1
+                        cell.X_graphic()
                 else:
                     None
             elif turn == "O":
@@ -143,6 +148,7 @@ def start_game_2_ultimate():
                     if cell.check_win():
                         master_celica.nought(inp_cell)
                         num_turns += 1
+                        cell.O_graphic()
                 else:
                     None            
         elif cell.winner != "":
@@ -160,7 +166,7 @@ def start_game_2_ultimate():
                     turn = "X"
                 else:
                     None
-    show_field_vanila(game)
+    show_field_ultimate(game)
     if master_celica.check_win():
         print(f"Čestitke {master_celica.winner}!")
     else:
