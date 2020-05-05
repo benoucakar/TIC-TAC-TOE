@@ -1,6 +1,7 @@
 class Cell:
     def __init__(self):
         self.cells = {1 : ".", 2 : ".", 3 : ".", 4 : ".", 5 : ".", 6 : ".", 7 : ".", 8 : ".", 9 : "."}
+        self.winner = ""
     def cross(self, n):
         if self.cells[n] == ".":
             self.cells[n] = "X"
@@ -15,20 +16,28 @@ class Cell:
             return False
     def check_win(self):
         if self.cells[1] == self.cells[2] == self.cells[3] and self.cells[1] != ".": #spodnja vrsta
+            self.winner = self.cells[1]
             return True
         elif self.cells[4] == self.cells[5] == self.cells[6] and self.cells[4] != ".": #srednja vrsta
+            self.winner = self.cells[4]
             return True
         elif self.cells[7] == self.cells[8] == self.cells[9] and self.cells[7] != ".": #zgornja vrsta
+            self.winner = self.cells[7]
             return True
         elif self.cells[1] == self.cells[4] == self.cells[7] and self.cells[1] != ".": #levi stolpec
+            self.winner = self.cells[1]
             return True
         elif self.cells[2] == self.cells[5] == self.cells[8] and self.cells[2] != ".": #srednji stolpec
+            self.winner = self.cells[2]
             return True
         elif self.cells[3] == self.cells[6] == self.cells[9] and self.cells[3] != ".": #desni stolpec
+            self.winner = self.cells[3]
             return True
         elif self.cells[3] == self.cells[5] == self.cells[7] and self.cells[3] != ".": #pad diagonala
+            self.winner = self.cells[3]
             return True
         elif self.cells[1] == self.cells[5] == self.cells[9] and self.cells[1] != ".": #narašč diagonala
+            self.winner = self.cells[1]
             return True
         else:
             return False
@@ -71,7 +80,6 @@ def show_field_ultimate(cells_list):
 def start_game_2_vanila():
     game = Cell()
     turn = input_promt_fixed("Bi prvi igralec imel križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
-    win = ""
     num_turns = 0
     print("Polja so številčena kot številčna tipkovnica.")
     while not game.check_win() and num_turns < 9:
@@ -80,20 +88,18 @@ def start_game_2_vanila():
         if turn == "X":
             if game.cross(inp):
                 turn = "O"
-                win = "X"
                 num_turns += 1
             else:
                 None
         elif turn == "O":
             if game.nought(inp):
                 turn = "X"
-                win = "O"
                 num_turns += 1
             else:
                 None
     show_field_vanila(game)
     if game.check_win():
-         print(f"Čestitke {win}!")
+        print(f"Čestitke {game.winner}!")
     else:
         print("Igra je neodločena.")
 
@@ -115,11 +121,9 @@ def start_game_2_ultimate():
     inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
     game[inp_cell].cross(inp_space)
     show_field_ultimate(game)
-    print(inp_cell, inp_space)
-#    while True:
-#        if turn == "X":
-#            None
-#        elif turn == "O":
-#            None
-
-start_game_2_ultimate()
+    turn = "O"
+    while True:
+        if turn == "X":
+            None
+        elif turn == "O":
+            None
