@@ -104,7 +104,7 @@ def start_game_2_vanila():
         print("Igra je neodločena.")
 
 def start_game_2_ultimate():
-    big_celica = Cell()
+    master_celica = Cell()
     celica1 = Cell()
     celica2 = Cell()
     celica3 = Cell()
@@ -116,13 +116,14 @@ def start_game_2_ultimate():
     celica9 = Cell()
     game = ["&", celica1, celica2, celica3, celica4, celica5, celica6, celica7, celica8, celica9]
     turn = "X"
+    num_turns = 0
     print("Polja so številčena kot številčna tipkovnica.")
     show_field_ultimate(game)
     inp_cell = int(input_promt_fixed(f"Za začetek sme {turn} izbrati poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
     inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
     game[inp_cell].cross(inp_space)
     turn = "O"
-    while True:
+    while not master_celica.check_win() and num_turns < 9:
         show_field_ultimate(game)
         cell = game[inp_space]
         inp_cell = inp_space
@@ -131,14 +132,19 @@ def start_game_2_ultimate():
             if turn == "X":
                 if cell.cross(inp_space):
                     turn = "O"
+                    if cell.check_win():
+                        master_celica.cross(inp_cell)
+                        num_turns += 1                         
                 else:
                     None
             elif turn == "O":
                 if cell.nought(inp_space):
                     turn = "X"
+                    if cell.check_win():
+                        master_celica.nought(inp_cell)
+                        num_turns += 1
                 else:
-                    None
-            
+                    None            
         elif cell.winner != "":
             print(f"To polje je že zaključeno. {turn} lahko gre kamorkoli.")
             inp_cell = int(input_promt_fixed(f"{turn} naj izbere poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
@@ -154,6 +160,10 @@ def start_game_2_ultimate():
                     turn = "X"
                 else:
                     None
-
+    show_field_vanila(game)
+    if master_celica.check_win():
+        print(f"Čestitke {master_celica.winner}!")
+    else:
+        print("Igra je neodločena.")
 
 start_game_2_ultimate()
