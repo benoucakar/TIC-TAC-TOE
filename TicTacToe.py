@@ -84,7 +84,7 @@ def start_game_2_vanila():
     print("Polja so številčena kot številčna tipkovnica.")
     while not game.check_win() and num_turns < 9:
         show_field_vanila(game)
-        inp = int(input_promt_fixed(f"Igralec {turn} je na potezi!", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+        inp = int(input_promt_fixed(f"Igralec {turn} je na potezi.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
         if turn == "X":
             if game.cross(inp):
                 turn = "O"
@@ -117,13 +117,26 @@ def start_game_2_ultimate():
     turn = "X"
     print("Polja so številčena kot številčna tipkovnica.")
     show_field_ultimate(game)
-    inp_cell = int(input_promt_fixed(f"{turn} sme izbrati poljubno celico", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
-    inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+    inp_cell = int(input_promt_fixed(f"Za začetek sme {turn} izbrati poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+    inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
     game[inp_cell].cross(inp_space)
-    show_field_ultimate(game)
     turn = "O"
     while True:
-        if turn == "X":
-            None
-        elif turn == "O":
-            None
+        show_field_ultimate(game)
+        cell = game[inp_space]
+        inp_cell = inp_space
+        if cell.winner == "":
+            inp_space = int(input_promt_fixed(f"{turn} naj izbere polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+            if turn == "X":
+                if cell.cross(inp_space):
+                    turn = "O"
+                else:
+                    None
+            elif turn == "O":
+                if cell.nought(inp_space):
+                    turn = "X"
+                else:
+                    None
+
+
+start_game_2_ultimate()
