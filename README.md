@@ -1,2 +1,14 @@
 # Ultimate TicTacToe
-The classic TicTacToe experience and the expansion game "Ultimate TicTacToe" for when you really have nothing better to do in quarantine.
+
+Klasična igra križcev in krožcev.  
+Če pa vam je v karanteni zelo dolg čas, pa se lahko preizkusite tudi v igri ultimativnih križvec in krožcev.
+
+## Kako uporabljati program
+**Program je še v fazi razvoja**  
+Če želite igrati igro običajnih križcev in krožcev v dvoigralskem načinu, zaženite `start_game_2_vanila()`.  
+Nato sledite navodilom v konzoli.  
+Če želite igrati igro ultimativnih križcev in krožcev v dvoigralskem načinu, zaženite `start_game_2_ultimate()`.  
+Nato sledite navodilom v konzoli.  
+
+## Pravila igre
+Gotovo vsi znamo igrati običajne križce in krožce. Kako se igra ultimativno verzijo, pa si lahko pogledate na tej [spletni strani](https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe).
