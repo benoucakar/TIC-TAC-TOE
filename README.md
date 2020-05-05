@@ -1,7 +1,7 @@
 # Ultimate TicTacToe
 
 Klasična igra križcev in krožcev.  
-Če pa vam je v karanteni zelo dolg čas, pa se lahko preizkusite tudi v igri ultimativnih križvec in krožcev.
+Če pa vam je v karanteni preveč dolg čas, se lahko preizkusite tudi v razširitvi igri: ultimativni križci in krožci.
 
 ## Kako uporabljati program
 **Program je še v fazi razvoja**  
