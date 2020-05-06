@@ -1,7 +1,6 @@
 class Cell:
     def __init__(self):
         self.cells = {1 : ".", 2 : ".", 3 : ".", 4 : ".", 5 : ".", 6 : ".", 7 : ".", 8 : ".", 9 : "."}
-        self.winner = ""
     def cross(self, n):
         if self.cells[n] == ".":
             self.cells[n] = "X"
@@ -20,28 +19,20 @@ class Cell:
         self.cells = {1 : "\\", 2 : "-", 3 : "/", 4 : "|", 5 : " ", 6 : "|", 7 : "/", 8 : "-", 9 : "\\"}
     def check_win(self):
         if self.cells[1] == self.cells[2] == self.cells[3] and self.cells[1] != ".": #spodnja vrsta
-            self.winner = self.cells[1]
             return True
         elif self.cells[4] == self.cells[5] == self.cells[6] and self.cells[4] != ".": #srednja vrsta
-            self.winner = self.cells[4]
             return True
         elif self.cells[7] == self.cells[8] == self.cells[9] and self.cells[7] != ".": #zgornja vrsta
-            self.winner = self.cells[7]
             return True
         elif self.cells[1] == self.cells[4] == self.cells[7] and self.cells[1] != ".": #levi stolpec
-            self.winner = self.cells[1]
             return True
         elif self.cells[2] == self.cells[5] == self.cells[8] and self.cells[2] != ".": #srednji stolpec
-            self.winner = self.cells[2]
             return True
         elif self.cells[3] == self.cells[6] == self.cells[9] and self.cells[3] != ".": #desni stolpec
-            self.winner = self.cells[3]
             return True
         elif self.cells[3] == self.cells[5] == self.cells[7] and self.cells[3] != ".": #pad diagonala
-            self.winner = self.cells[3]
             return True
         elif self.cells[1] == self.cells[5] == self.cells[9] and self.cells[1] != ".": #narašč diagonala
-            self.winner = self.cells[1]
             return True
         else:
             return False
@@ -108,7 +99,7 @@ def start_game_2_vanila():
                 None
     show_field_vanila(game)
     if game.check_win():
-        print(f"Čestitke {game.winner}!")
+        print(f"Čestitke {sign_switch(turn)}!")
     else:
         print("Igra je neodločena.")
 
@@ -136,7 +127,7 @@ def start_game_2_ultimate():
         show_field_ultimate(game)
         cell = game[inp_space]
         inp_cell = inp_space
-        if cell.winner == "":
+        if master_celica.cells[inp_space] == ".":
             inp_space = int(input_promt_fixed(f"{turn} naj izbere polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
             if turn == "X":
                 if cell.cross(inp_space):
@@ -156,7 +147,7 @@ def start_game_2_ultimate():
                         cell.O_graphic()
                 else:
                     None            
-        elif cell.winner != "":
+        elif master_celica.cells[inp_space] != ".":
             print(f"To polje je že zaključeno. {turn} lahko gre kamorkoli.")
             inp_cell = int(input_promt_fixed(f"{turn} naj izbere poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
             inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))            
@@ -173,7 +164,7 @@ def start_game_2_ultimate():
                     None
     show_field_ultimate(game)
     if master_celica.check_win():
-        print(f"Čestitke {master_celica.winner}!")
+        print(f"Čestitke {sign_switch(turn)}!")
     else:
         print("Igra je neodločena.")
 
