@@ -46,6 +46,11 @@ class Cell:
         else:
             return False
 
+def sign_switch(a):
+    if a == "X":
+        return "O"
+    elif a == "O":
+        return "X"
 
 def input_promt_fixed(question, input_text, fail_text, choice_list):
     """Poenostva nadzor nad vhodnimi podatki iz konzole. Vprašanje / pričakovani odgovori / opomba, če vnos ni ustrezen / seznam ustreznih vnosov """
@@ -91,13 +96,13 @@ def start_game_2_vanila():
         inp = int(input_promt_fixed(f"Igralec {turn} je na potezi.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
         if turn == "X":
             if game.cross(inp):
-                turn = "O"
+                turn = sign_switch(turn)
                 num_turns += 1
             else:
                 None
         elif turn == "O":
             if game.nought(inp):
-                turn = "X"
+                turn = sign_switch(turn)
                 num_turns += 1
             else:
                 None
@@ -135,7 +140,7 @@ def start_game_2_ultimate():
             inp_space = int(input_promt_fixed(f"{turn} naj izbere polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
             if turn == "X":
                 if cell.cross(inp_space):
-                    turn = "O"
+                    turn = sign_switch(turn)
                     if cell.check_win():
                         master_celica.cross(inp_cell)
                         num_turns += 1
@@ -144,7 +149,7 @@ def start_game_2_ultimate():
                     None
             elif turn == "O":
                 if cell.nought(inp_space):
-                    turn = "X"
+                    turn = sign_switch(turn)
                     if cell.check_win():
                         master_celica.nought(inp_cell)
                         num_turns += 1
@@ -158,12 +163,12 @@ def start_game_2_ultimate():
             cell = game[inp_space]
             if turn == "X":
                 if cell.cross(inp_space):
-                    turn = "O"
+                    turn = sign_switch(turn)
                 else:
                     None
             elif turn == "O":
                 if cell.nought(inp_space):
-                    turn = "X"
+                    turn = sign_switch(turn)
                 else:
                     None
     show_field_ultimate(game)
