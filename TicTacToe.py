@@ -46,6 +46,8 @@ class Cell:
             return True
         else:
             return False
+    def check_draw(self):
+        return not ("." in self.cells.values() or self.check_win())
 
 def sign_switch(a):
     if a == "X":
@@ -123,7 +125,7 @@ def start_game_2_ultimate():
     game = ["&", celica1, celica2, celica3, celica4, celica5, celica6, celica7, celica8, celica9]
     turn = input_promt_fixed("Bi prvi igralec imel križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
     num_turns = 0
-    print("Polja so številčena kot številčna tipkovnica.")
+    print("Celice in polja so številčena kot številčna tipkovnica.")
     show_field_ultimate(game)
     inp_cell = int(input_promt_fixed(f"Za začetek sme {turn} izbrati poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
     inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
@@ -147,6 +149,10 @@ def start_game_2_ultimate():
                         master_celica.cross(inp_cell)
                         num_turns += 1
                         current_cell.X_graphic()
+                    elif current_cell.check_draw():
+                        master_celica.draw(inp_cell)
+                        num_turns += 1
+                        current_cell.Draw_graphic()
                     inp_cell = inp_space
 
             elif turn == "O":
@@ -156,9 +162,13 @@ def start_game_2_ultimate():
                         master_celica.nought(inp_cell)
                         num_turns += 1
                         current_cell.O_graphic()
+                    elif current_cell.check_draw():
+                        master_celica.draw(inp_cell)
+                        num_turns += 1
+                        current_cell.Draw_graphic()
                     inp_cell = inp_space
         elif master_celica.cells[inp_cell] != ".":    
-            print(f"To polje je že zaključeno. {turn} lahko gre kamorkoli.")
+            print(f"Ta celica je že zaključeno. {turn} lahko gre kamorkoli.")
             inp_cell = int(input_promt_fixed(f"{turn} naj izbere poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
 
 
