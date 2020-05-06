@@ -160,7 +160,7 @@ def start_game_2_ultimate():
             print(f"To polje je že zaključeno. {turn} lahko gre kamorkoli.")
             inp_cell = int(input_promt_fixed(f"{turn} naj izbere poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
             inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))            
-            cell = game[inp_space]
+            cell = game[inp_cell]
             if turn == "X":
                 if cell.cross(inp_space):
                     turn = sign_switch(turn)
