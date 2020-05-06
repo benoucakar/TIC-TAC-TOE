@@ -13,10 +13,18 @@ class Cell:
             return True
         else:
             return False
+    def draw(self, n):
+        if self.cells[n] == ".":
+            self.cells[n] = "+"
+            return True
+        else:
+            return False
     def X_graphic(self):
         self.cells = {1 : "/", 2 : " ", 3 : "\\", 4 : " ", 5 : "X", 6 : " ", 7 : "\\", 8 : " ", 9 : "/"}
     def O_graphic(self):
         self.cells = {1 : "\\", 2 : "-", 3 : "/", 4 : "|", 5 : " ", 6 : "|", 7 : "/", 8 : "-", 9 : "\\"}
+    def Draw_graphic(self):
+        self.cells = {1 : "+", 2 : "+", 3 : "+", 4 : "+", 5 : "+", 6 : "+", 7 : "+", 8 : "+", 9 : "+"}
     def check_win(self):
         if self.cells[1] == self.cells[2] == self.cells[3] and self.cells[1] != ".": #spodnja vrsta
             return True
@@ -168,4 +176,5 @@ def start_game_2_ultimate():
     else:
         print("Igra je neodločena.")
 
-start_game_2_ultimate()
+#start_game_2_ultimate()
+test = Cell()
