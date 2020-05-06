@@ -121,15 +121,18 @@ def start_game_2_ultimate():
     celica8 = Cell()
     celica9 = Cell()
     game = ["&", celica1, celica2, celica3, celica4, celica5, celica6, celica7, celica8, celica9]
-    turn = "X"
+    turn = input_promt_fixed("Bi prvi igralec imel križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
     num_turns = 0
     print("Polja so številčena kot številčna tipkovnica.")
     show_field_ultimate(game)
     inp_cell = int(input_promt_fixed(f"Za začetek sme {turn} izbrati poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
     inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
-    game[inp_cell].cross(inp_space)
+    if turn == "X":
+        game[inp_cell].cross(inp_space)
+    elif turn == "O":
+        game[inp_cell].nought(inp_space)
     inp_cell = inp_space
-    turn = "O"
+    turn = sign_switch(turn)
 
 
     while not master_celica.check_win() and num_turns < 9:
