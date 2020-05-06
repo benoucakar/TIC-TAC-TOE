@@ -6,12 +6,14 @@ class Cell:
             self.cells[n] = "X"
             return True
         else:
+            print("To polje je že zasedeno.")
             return False
     def nought(self, n):
         if self.cells[n] == ".":
             self.cells[n] = "O"
             return True
         else:
+            print("To polje je že zasedeno.")
             return False
     def draw(self, n):
         if self.cells[n] == ".":
@@ -97,14 +99,10 @@ def start_game_2_vanila():
             if game.cross(inp):
                 turn = sign_switch(turn)
                 num_turns += 1
-            else:
-                None
         elif turn == "O":
             if game.nought(inp):
                 turn = sign_switch(turn)
                 num_turns += 1
-            else:
-                None
     show_field_vanila(game)
     if game.check_win():
         print(f"Čestitke {sign_switch(turn)}!")
@@ -130,51 +128,43 @@ def start_game_2_ultimate():
     inp_cell = int(input_promt_fixed(f"Za začetek sme {turn} izbrati poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
     inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
     game[inp_cell].cross(inp_space)
+    inp_cell = inp_space
     turn = "O"
+
+
     while not master_celica.check_win() and num_turns < 9:
         show_field_ultimate(game)
-        cell = game[inp_space]
-        inp_cell = inp_space
-        if master_celica.cells[inp_space] == ".":
+        current_cell = game[inp_cell]        
+        if master_celica.cells[inp_cell] == ".":
             inp_space = int(input_promt_fixed(f"{turn} naj izbere polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
             if turn == "X":
-                if cell.cross(inp_space):
+                if current_cell.cross(inp_space):
                     turn = sign_switch(turn)
-                    if cell.check_win():
+                    if current_cell.check_win():
                         master_celica.cross(inp_cell)
                         num_turns += 1
-                        cell.X_graphic()
-                else:
-                    None
+                        current_cell.X_graphic()
+                    inp_cell = inp_space
+
             elif turn == "O":
-                if cell.nought(inp_space):
+                if current_cell.nought(inp_space):
                     turn = sign_switch(turn)
-                    if cell.check_win():
+                    if current_cell.check_win():
                         master_celica.nought(inp_cell)
                         num_turns += 1
-                        cell.O_graphic()
-                else:
-                    None            
-        elif master_celica.cells[inp_space] != ".":
+                        current_cell.O_graphic()
+                    inp_cell = inp_space
+        elif master_celica.cells[inp_cell] != ".":    
             print(f"To polje je že zaključeno. {turn} lahko gre kamorkoli.")
             inp_cell = int(input_promt_fixed(f"{turn} naj izbere poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
-            inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))            
-            cell = game[inp_cell]
-            if turn == "X":
-                if cell.cross(inp_space):
-                    turn = sign_switch(turn)
-                else:
-                    None
-            elif turn == "O":
-                if cell.nought(inp_space):
-                    turn = sign_switch(turn)
-                else:
-                    None
+
+
     show_field_ultimate(game)
     if master_celica.check_win():
         print(f"Čestitke {sign_switch(turn)}!")
     else:
         print("Igra je neodločena.")
 
-#start_game_2_ultimate()
+#start_game_2_vanila()
+start_game_2_ultimate()
 test = Cell()
