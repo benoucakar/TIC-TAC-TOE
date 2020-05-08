@@ -1,3 +1,5 @@
+import random
+
 class Cell:
     def __init__(self):
         self.cells = {1 : ".", 2 : ".", 3 : ".", 4 : ".", 5 : ".", 6 : ".", 7 : ".", 8 : ".", 9 : "."}
@@ -173,10 +175,6 @@ def start_game_2_ultimate():
     else:
         print("Igra je neodločena.")
 
-#start_game_2_vanila()
-#start_game_2_ultimate()
-test = Cell()
-
 def bot_win_block(cell, mark):
     X_list = []
     O_list = []
@@ -192,9 +190,51 @@ def bot_win_block(cell, mark):
             if test.check_win()[0]:
                 O_list.append(space)
     if mark == "X":
-        return (X_list + O_list + [None])[0]
+        return (X_list + O_list + [0])[0]
     elif mark == "O":
-        return (O_list + X_list + [None])[0]
-            
+        return (O_list + X_list + [0])[0]
+
+def start_game_1_vanila():
+#   mark = input_promt_fixed("Želite imeti križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
+    mark = "X"
+#   player_first = input_promt_fixed("Želite biti prvi?", "y/n", "Žal je bil vnos neustrezen.", ["y", "n"])
+#   igralec prvi
+#   tezavnost = input_promt_fixed("Izberite težavnostno stopnjo. Večje kot je število, težje bo.", "(1 - 4)", "Žal je bil vnos neustrezen.", ["1", "2", "3", "4"])
+#    player_turn = player_first == "y"
+    player_turn = True
+    bot_memory = [i for i in range(1, 10)]
+    game = Cell()
+    num_turns = 0
+    print("Polja so številčena kot številčna tipkovnica.")
+    while not game.check_win()[0] and num_turns < 9:
+        if player_turn:
+            show_field_vanila(game)
+            inp = int(input_promt_fixed(f"Ste na potezi.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+        else:
+            if bot_win_block(game, "O") == 0:
+                None
+            else:
+                inp = bot_win_block(game, "O")
+        
+        if player_turn:
+            if game.cross(inp):
+                player_turn = not player_turn
+                num_turns += 1
+        else:
+            if game.nought(inp):
+                player_turn = not player_turn
+                num_turns += 1
+    show_field_vanila(game)
+    if game.check_win()[0] and not player_turn:
+        print("Čestitke!")
+    elif game.check_win()[0] and player_turn:
+        print("Žal ste izgubili. Več sreče prihodnjič.")
+    else:
+        print("Igra je neodločena.")
+        
+
 
 # bot_win_block(test, "O")
+#start_game_2_vanila()
+#start_game_2_ultimate()
+test = Cell()
