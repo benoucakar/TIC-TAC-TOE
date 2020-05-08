@@ -29,25 +29,25 @@ class Cell:
         self.cells = {1 : "+", 2 : "+", 3 : "+", 4 : "+", 5 : "+", 6 : "+", 7 : "+", 8 : "+", 9 : "+"}
     def check_win(self):
         if self.cells[1] == self.cells[2] == self.cells[3] != ".": #spodnja vrsta
-            return True
+            return (True, self.cells[1])
         elif self.cells[4] == self.cells[5] == self.cells[6] != ".": #srednja vrsta
-            return True
+            return (True, self.cells[4])
         elif self.cells[7] == self.cells[8] == self.cells[9] != ".": #zgornja vrsta
-            return True
+            return (True, self.cells[7])
         elif self.cells[1] == self.cells[4] == self.cells[7] != ".": #levi stolpec
-            return True
+            return (True, self.cells[1])
         elif self.cells[2] == self.cells[5] == self.cells[8] != ".": #srednji stolpec
-            return True
+            return (True, self.cells[2])
         elif self.cells[3] == self.cells[6] == self.cells[9] != ".": #desni stolpec
-            return True
+            return (True, self.cells[3])
         elif self.cells[3] == self.cells[5] == self.cells[7] != ".": #pad diagonala
-            return True
+            return (True, self.cells[3])
         elif self.cells[1] == self.cells[5] == self.cells[9] != ".": #narašč diagonala
-            return True
+            return (True, self.cells[1])
         else:
-            return False
+            return (False, None)
     def check_draw(self):
-        return not ("." in self.cells.values() or self.check_win())
+        return not ("." in self.cells.values() or self.check_win()[0])
 
 def sign_switch(a):
     if a == "X":
@@ -64,7 +64,6 @@ def input_promt_fixed(question, input_text, fail_text, choice_list):
             return choice
         else:
             print(fail_text)
-
 
 def show_field_vanila(cell):
     print(" ------- ")
@@ -94,7 +93,7 @@ def start_game_2_vanila():
     turn = input_promt_fixed("Bi prvi igralec imel križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
     num_turns = 0
     print("Polja so številčena kot številčna tipkovnica.")
-    while not game.check_win() and num_turns < 9:
+    while not game.check_win()[0] and num_turns < 9:
         show_field_vanila(game)
         inp = int(input_promt_fixed(f"Igralec {turn} je na potezi.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
         if turn == "X":
@@ -106,7 +105,7 @@ def start_game_2_vanila():
                 turn = sign_switch(turn)
                 num_turns += 1
     show_field_vanila(game)
-    if game.check_win():
+    if game.check_win()[0]:
         print(f"Čestitke {sign_switch(turn)}!")
     else:
         print("Igra je neodločena.")
@@ -137,7 +136,7 @@ def start_game_2_ultimate():
     turn = sign_switch(turn)
 
 
-    while not master_celica.check_win() and num_turns < 9:
+    while not master_celica.check_win()[0] and num_turns < 9:
         show_field_ultimate(game)
         current_cell = game[inp_cell]        
         if master_celica.cells[inp_cell] == ".":
@@ -145,7 +144,7 @@ def start_game_2_ultimate():
             if turn == "X":
                 if current_cell.cross(inp_space):
                     turn = sign_switch(turn)
-                    if current_cell.check_win():
+                    if current_cell.check_win()[0]:
                         master_celica.cross(inp_cell)
                         num_turns += 1
                         current_cell.X_graphic()
@@ -154,11 +153,10 @@ def start_game_2_ultimate():
                         num_turns += 1
                         current_cell.Draw_graphic()
                     inp_cell = inp_space
-
             elif turn == "O":
                 if current_cell.nought(inp_space):
                     turn = sign_switch(turn)
-                    if current_cell.check_win():
+                    if current_cell.check_win()[0]:
                         master_celica.nought(inp_cell)
                         num_turns += 1
                         current_cell.O_graphic()
@@ -173,7 +171,7 @@ def start_game_2_ultimate():
 
 
     show_field_ultimate(game)
-    if master_celica.check_win():
+    if master_celica.check_win()[0]:
         print(f"Čestitke {sign_switch(turn)}!")
     else:
         print("Igra je neodločena.")
