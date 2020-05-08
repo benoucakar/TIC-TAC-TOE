@@ -87,7 +87,6 @@ def show_field_ultimate(cells_list):
     print(f"| {cells_list[1].cells[1]} {cells_list[1].cells[2]} {cells_list[1].cells[3]} | {cells_list[2].cells[1]} {cells_list[2].cells[2]} {cells_list[2].cells[3]} | {cells_list[3].cells[1]} {cells_list[3].cells[2]} {cells_list[3].cells[3]} |")
     print(" " + "-" * 23 + " ")
 
-
 def start_game_2_vanila():
     game = Cell()
     turn = input_promt_fixed("Bi prvi igralec imel križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
@@ -135,7 +134,6 @@ def start_game_2_ultimate():
     inp_cell = inp_space
     turn = sign_switch(turn)
 
-
     while not master_celica.check_win()[0] and num_turns < 9:
         show_field_ultimate(game)
         current_cell = game[inp_cell]        
@@ -169,7 +167,6 @@ def start_game_2_ultimate():
             print(f"Ta celica je že zaključeno. {turn} lahko gre kamorkoli.")
             inp_cell = int(input_promt_fixed(f"{turn} naj izbere poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
 
-
     show_field_ultimate(game)
     if master_celica.check_win()[0]:
         print(f"Čestitke {sign_switch(turn)}!")
@@ -177,5 +174,41 @@ def start_game_2_ultimate():
         print("Igra je neodločena.")
 
 #start_game_2_vanila()
-start_game_2_ultimate()
+#start_game_2_ultimate()
 test = Cell()
+
+def bot_win_block(cell, mark):
+    for space, sign in cell.cells.items():
+        if mark == "X":
+            if sign == ".":
+                test = Cell()
+                # Zmaga
+                test.cells = dict(cell.cells)
+                test.cross(space)
+                if test.check_win()[0]:
+                    cell.cross(space)
+                    break
+                # Block
+                test.cells = dict(cell.cells)
+                test.nought(space)
+                if test.check_win()[0]:
+                    cell.cross(space)
+                    break
+        elif mark == "O":
+            if sign == ".":
+                test = Cell()
+                # Zmaga
+                test.cells = dict(cell.cells)
+                test.nought(space)
+                if test.check_win()[0]:
+                    cell.nought(space)
+                    break
+                # Block
+                test.cells = dict(cell.cells)
+                test.cross(space)
+                if test.check_win()[0]:
+                    cell.nought(space)
+                    break
+            
+
+bot_win_block(test, "O")
