@@ -178,37 +178,23 @@ def start_game_2_ultimate():
 test = Cell()
 
 def bot_win_block(cell, mark):
+    X_list = []
+    O_list = []
     for space, sign in cell.cells.items():
-        if mark == "X":
-            if sign == ".":
-                test = Cell()
-                # Zmaga
-                test.cells = dict(cell.cells)
-                test.cross(space)
-                if test.check_win()[0]:
-                    cell.cross(space)
-                    break
-                # Block
-                test.cells = dict(cell.cells)
-                test.nought(space)
-                if test.check_win()[0]:
-                    cell.cross(space)
-                    break
-        elif mark == "O":
-            if sign == ".":
-                test = Cell()
-                # Zmaga
-                test.cells = dict(cell.cells)
-                test.nought(space)
-                if test.check_win()[0]:
-                    cell.nought(space)
-                    break
-                # Block
-                test.cells = dict(cell.cells)
-                test.cross(space)
-                if test.check_win()[0]:
-                    cell.nought(space)
-                    break
+        test = Cell()
+        if sign == ".":
+            test.cells = dict(cell.cells)
+            test.cross(space)
+            if test.check_win()[0]:
+                X_list.append(space)
+            test.cells = dict(cell.cells)
+            test.nought(space)
+            if test.check_win()[0]:
+                O_list.append(space)
+    if mark == "X":
+        return (X_list + O_list + [None])[0]
+    elif mark == "O":
+        return (O_list + X_list + [None])[0]
             
 
-bot_win_block(test, "O")
+# bot_win_block(test, "O")
