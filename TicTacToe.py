@@ -175,7 +175,7 @@ def start_game_2_ultimate():
     else:
         print("Igra je neodločena.")
 
-def bot_win_block(cell, mark):
+def bot_win_block(cell, player_mark):
     X_list = []
     O_list = []
     for space, sign in cell.cells.items():
@@ -189,33 +189,72 @@ def bot_win_block(cell, mark):
             test.nought(space)
             if test.check_win()[0]:
                 O_list.append(space)
-    if mark == "X":
+    if player_mark == "O":
         return (X_list + O_list + [0])[0]
-    elif mark == "O":
+    elif player_mark == "X":
         return (O_list + X_list + [0])[0]
 
+def bot_vanila_optimal(cell, player_mark, bot_first):
+    # bot je prvi
+    if bot_first:
+        yield 1 # prazno igro začne v kotu
+        if cell.cells[5] == player_mark: #igralec da na sredo
+            yield 9 # Če da igralec v prost kot, DONE, sicer blokiranje do konca
+        else: # igralec ne da na sredo
+            if player_mark == cell.cells[2] or player_mark == cell.cells[3]:
+                yield 7
+            else:
+                yield 3
+            yield 5 # bot zavzame center, DONE
+    # bot je drugi
+    else:
+        if cell.cells[5] == player_mark: # igralec da na sredo
+            yield 1 # bot da v kot sledi blokiranja do konca ali
+            yield 3 # če ne naredi grožnje za blok
+        elif player_mark in [cell.cells[i] for i in [1, 3, 7, 9]]: # igralec da v kot
+            yield 5 # da na sredo
+            if player_mark == cell.cells[1] == cell.cells[9] or player_mark == cell.cells[3] == cell.cells[7]: # igra diagonalo
+                yield 2 # da ne padeš v past
+            # prepreči slabo situacijo
+            elif player_mark == cell.cells[1]:
+                yield 9
+            elif player_mark == cell.cells[3]:
+                yield 7
+            elif player_mark == cell.cells[7]:
+                yield 3
+            elif player_mark == cell.cells[9]:
+                yield 1
+    # če da igralec na rob je vseeno
+    # konec algoritma
+    while True:
+        yield 0
+
 def start_game_1_vanila():
-#   mark = input_promt_fixed("Želite imeti križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
+    #mark = input_promt_fixed("Želite imeti križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
     mark = "X"
-#   player_first = input_promt_fixed("Želite biti prvi?", "y/n", "Žal je bil vnos neustrezen.", ["y", "n"])
-#   igralec prvi
-#   tezavnost = input_promt_fixed("Izberite težavnostno stopnjo. Večje kot je število, težje bo.", "(1 - 4)", "Žal je bil vnos neustrezen.", ["1", "2", "3", "4"])
-#    player_turn = player_first == "y"
-    player_turn = True
-    bot_memory = [i for i in range(1, 10)]
+    player_first = input_promt_fixed("Želite biti prvi?", "y/n", "Žal je bil vnos neustrezen.", ["y", "n"])
+    player_turn = player_first == "y"
+    # tezavnost = input_promt_fixed("Izberite težavnostno stopnjo. Večje kot je število, težje bo.", "(1 - 4)", "Žal je bil vnos neustrezen.", ["1", "2", "3", "4"])
     game = Cell()
     num_turns = 0
+    bot = bot_vanila_optimal(game, mark, not player_turn)
     print("Polja so številčena kot številčna tipkovnica.")
     while not game.check_win()[0] and num_turns < 9:
         if player_turn:
             show_field_vanila(game)
             inp = int(input_promt_fixed(f"Ste na potezi.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
         else:
-            if bot_win_block(game, "O") == 0:
-                None
+            # poskuša zmagat ali preprečit
+            if bot_win_block(game, mark) != 0:
+                inp = bot_win_block(game, mark)
+            # igra strategijo
             else:
-                inp = bot_win_block(game, "O")
-        
+                temp = next(bot)
+                if temp != 0:
+                    inp = temp
+                # sicer
+                else:
+                    inp = random.choice([key for key, value in game.cells.items() if value == "."])
         if player_turn:
             if game.cross(inp):
                 player_turn = not player_turn
@@ -234,7 +273,7 @@ def start_game_1_vanila():
         
 
 
-# bot_win_block(test, "O")
+start_game_1_vanila()
 #start_game_2_vanila()
 #start_game_2_ultimate()
 test = Cell()
