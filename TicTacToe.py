@@ -91,22 +91,26 @@ def start_game_2_vanila():
     game = Cell()
     turn = input_promt_fixed("Bi prvi igralec imel križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
     num_turns = 0
+    bad_choice = False
     print("Polja so številčena kot številčna tipkovnica.")
     while not game.check_win() and num_turns < 9:
         show_field_vanila(game)
+        if bad_choice:
+            print("To polje je že zasedeno.")
+            bad_choice = False
         inp = int(input_promt_fixed(f"Igralec {turn} je na potezi.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
         if turn == "X":
             if game.cross(inp):
                 turn = sign_switch(turn)
                 num_turns += 1
             else:
-                print("To polje je že zasedeno.")
+                bad_choice = True
         elif turn == "O":
             if game.nought(inp):
                 turn = sign_switch(turn)
                 num_turns += 1
             else:
-                print("To polje je že zasedeno.")
+                bad_choice = True
     show_field_vanila(game)
     if game.check_win():
         print(f"Čestitke {sign_switch(turn)}!")
@@ -127,6 +131,7 @@ def start_game_2_ultimate():
     game = ["&", celica1, celica2, celica3, celica4, celica5, celica6, celica7, celica8, celica9]
     turn = input_promt_fixed("Bi prvi igralec imel križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
     num_turns = 0
+    bad_choice = False
     print("Celice in polja so številčena kot številčna tipkovnica.")
     show_field_ultimate(game)
     inp_cell = int(input_promt_fixed(f"Za začetek sme {turn} izbrati poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
@@ -140,6 +145,9 @@ def start_game_2_ultimate():
 
     while not master_celica.check_win() and num_turns < 9:
         show_field_ultimate(game)
+        if bad_choice:
+            print("To polje je že zasedeno.")
+            bad_choice = False
         current_cell = game[inp_cell]        
         if master_celica.cells[inp_cell] == ".":
             inp_space = int(input_promt_fixed(f"{turn} naj izbere polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
@@ -156,7 +164,7 @@ def start_game_2_ultimate():
                         current_cell.Draw_graphic()
                     inp_cell = inp_space
                 else:
-                    print("To polje je že zasedeno.")
+                    bad_choice = True
             elif turn == "O":
                 if current_cell.nought(inp_space):
                     turn = sign_switch(turn)
@@ -169,7 +177,7 @@ def start_game_2_ultimate():
                         num_turns += 1
                         current_cell.Draw_graphic()
                     inp_cell = inp_space
-                print("To polje je že zasedeno.")
+                bad_choice = True
         elif master_celica.cells[inp_cell] != ".":    
             print(f"Ta celica je že zaključeno. {turn} lahko gre kamorkoli.")
             inp_cell = int(input_promt_fixed(f"{turn} naj izbere poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
@@ -243,8 +251,12 @@ def start_game_1_vanila():
     game = Cell()
     num_turns = 0
     bot = bot_vanila_optimal(game, mark, not player_turn)
+    bad_choice = False
     print("Polja so številčena kot številčna tipkovnica.")
     while not game.check_win() and num_turns < 9:
+        if bad_choice:
+            print("To polje je že zasedeno.")
+            bad_choice = False
         if player_turn:
             show_field_vanila(game)
             inp = int(input_promt_fixed(f"Ste na potezi.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
@@ -265,13 +277,13 @@ def start_game_1_vanila():
                 player_turn = not player_turn
                 num_turns += 1
             else:
-                print("To polje je že zasedeno.")
+                bad_choice = True
         else:
             if game.nought(inp):
                 player_turn = not player_turn
                 num_turns += 1
             else:
-                print("To polje je že zasedeno.")
+                bad_choice = True
     show_field_vanila(game)
     if game.check_win() and not player_turn:
         print("Čestitke!")
