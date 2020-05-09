@@ -30,21 +30,21 @@ class Cell:
     def Draw_graphic(self):
         self.cells = {1 : "+", 2 : "+", 3 : "+", 4 : "+", 5 : "+", 6 : "+", 7 : "+", 8 : "+", 9 : "+"}
     def check_win(self):
-        if self.cells[1] == self.cells[2] == self.cells[3] != ".": #spodnja vrsta
+        if self.cells[1] == self.cells[2] == self.cells[3] != "." and self.cells[1] != "+": #spodnja vrsta
             return True
-        elif self.cells[4] == self.cells[5] == self.cells[6] != ".": #srednja vrsta
+        elif self.cells[4] == self.cells[5] == self.cells[6] != "." and self.cells[4] != "+": #srednja vrsta
             return True
-        elif self.cells[7] == self.cells[8] == self.cells[9] != ".": #zgornja vrsta
+        elif self.cells[7] == self.cells[8] == self.cells[9] != "." and self.cells[7] != "+": #zgornja vrsta
             return True
-        elif self.cells[1] == self.cells[4] == self.cells[7] != ".": #levi stolpec
+        elif self.cells[1] == self.cells[4] == self.cells[7] != "." and self.cells[1] != "+": #levi stolpec
             return True
-        elif self.cells[2] == self.cells[5] == self.cells[8] != ".": #srednji stolpec
+        elif self.cells[2] == self.cells[5] == self.cells[8] != "." and self.cells[2] != "+": #srednji stolpec
             return True
-        elif self.cells[3] == self.cells[6] == self.cells[9] != ".": #desni stolpec
+        elif self.cells[3] == self.cells[6] == self.cells[9] != "." and self.cells[3] != "+": #desni stolpec
             return True
-        elif self.cells[3] == self.cells[5] == self.cells[7] != ".": #pad diagonala
+        elif self.cells[3] == self.cells[5] == self.cells[7] != "." and self.cells[3] != "+": #pad diagonala
             return True
-        elif self.cells[1] == self.cells[5] == self.cells[9] != ".": #narašč diagonala
+        elif self.cells[1] == self.cells[5] == self.cells[9] != "." and self.cells[1] != "+": #narašč diagonala
             return True
         else:
             return False
@@ -273,7 +273,8 @@ def start_game_1_vanila():
         
 
 
-start_game_1_vanila()
+#start_game_1_vanila()
 #start_game_2_vanila()
-#start_game_2_ultimate()
+start_game_2_ultimate()
 test = Cell()
+
