@@ -214,11 +214,21 @@ def bot_vanila_optimal(cell, player_mark, bot_first):
         if cell.cells[5] == player_mark: #igralec da na sredo
             yield 9 # Če da igralec v prost kot, DONE, sicer blokiranje do konca
         else: # igralec ne da na sredo
-            if player_mark == cell.cells[2] or player_mark == cell.cells[3]:
-                yield 7
-            else:
+            if player_mark == cell.cells[9]:
                 yield 3
-            yield 5 # bot zavzame center, DONE
+                yield 7
+            elif player_mark == cell.cells[2] or player_mark == cell.cells[8]:
+                yield 7
+                yield 5
+            elif player_mark == cell.cells[4] or player_mark == cell.cells[6]:
+                yield 3
+                yield 5
+            elif player_mark == cell.cells[7]:
+                yield 9
+                yield 3
+            elif player_mark == cell.cells[3]:
+                yield 9
+                yield 7
     # bot je drugi
     else:
         if cell.cells[5] == player_mark: # igralec da na sredo
@@ -296,6 +306,6 @@ def start_game_1_vanila():
 
 #start_game_1_vanila()
 #start_game_2_vanila()
-start_game_2_ultimate()
+#start_game_2_ultimate()
 test = Cell()
 
