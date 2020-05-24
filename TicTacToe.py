@@ -28,24 +28,11 @@ class Cell:
     def Draw_graphic(self):
         self.cells = {1 : "+", 2 : "+", 3 : "+", 4 : "+", 5 : "+", 6 : "+", 7 : "+", 8 : "+", 9 : "+"}
     def check_win(self):
-        if self.cells[1] == self.cells[2] == self.cells[3] != "." and self.cells[1] != "+": #spodnja vrsta
-            return True
-        elif self.cells[4] == self.cells[5] == self.cells[6] != "." and self.cells[4] != "+": #srednja vrsta
-            return True
-        elif self.cells[7] == self.cells[8] == self.cells[9] != "." and self.cells[7] != "+": #zgornja vrsta
-            return True
-        elif self.cells[1] == self.cells[4] == self.cells[7] != "." and self.cells[1] != "+": #levi stolpec
-            return True
-        elif self.cells[2] == self.cells[5] == self.cells[8] != "." and self.cells[2] != "+": #srednji stolpec
-            return True
-        elif self.cells[3] == self.cells[6] == self.cells[9] != "." and self.cells[3] != "+": #desni stolpec
-            return True
-        elif self.cells[3] == self.cells[5] == self.cells[7] != "." and self.cells[3] != "+": #pad diagonala
-            return True
-        elif self.cells[1] == self.cells[5] == self.cells[9] != "." and self.cells[1] != "+": #narašč diagonala
-            return True
-        else:
-            return False
+        win_situations = [(1, 2, 3), (4, 5, 6), (7, 8, 9), (1, 4, 7), (2, 5, 8), (3, 6, 9), (3, 5, 7), (1, 5, 9)]
+        for i, j, k in win_situations:
+            if self.cells[i] == self.cells[j] == self.cells[k] != "." and self.cells[1] != "+":
+                return True
+        return False
     def check_draw(self):
         return not ("." in self.cells.values() or self.check_win())
 
