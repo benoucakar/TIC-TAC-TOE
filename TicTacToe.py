@@ -3,19 +3,12 @@ import random
 class Cell:
     def __init__(self):
         self.cells = {1 : ".", 2 : ".", 3 : ".", 4 : ".", 5 : ".", 6 : ".", 7 : ".", 8 : ".", 9 : "."}
-    def cross(self, n):
+    def oznaci_polje(self, n, znak):
         if self.cells[n] == ".":
-            self.cells[n] = "X"
+            self.cells[n] = znak
             return True
         else:
             return False
-    def nought(self, n):
-        if self.cells[n] == ".":
-            self.cells[n] = "O"
-            return True
-        else:
-            return False
-    def draw(self, n):
         if self.cells[n] == ".":
             self.cells[n] = "+"
             return True
@@ -35,6 +28,12 @@ class Cell:
         return False
     def check_draw(self):
         return not ("." in self.cells.values() or self.check_win())
+
+class Vanila:
+    None
+
+class Ultimate:
+    None
 
 def sign_switch(a):
     if a == "X":
@@ -87,13 +86,13 @@ def start_game_2_vanila():
             bad_choice = False
         inp = int(input_promt_fixed(f"Igralec {turn} je na potezi.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
         if turn == "X":
-            if game.cross(inp):
+            if game.oznaci_polje(inp, "X"):
                 turn = sign_switch(turn)
                 num_turns += 1
             else:
                 bad_choice = True
         elif turn == "O":
-            if game.nought(inp):
+            if game.oznaci_polje(inp, "O"):
                 turn = sign_switch(turn)
                 num_turns += 1
             else:
@@ -124,9 +123,9 @@ def start_game_2_ultimate():
     inp_cell = int(input_promt_fixed(f"Za začetek sme {turn} izbrati poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
     inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
     if turn == "X":
-        game[inp_cell].cross(inp_space)
+        game[inp_cell].oznaci_polje(inp_space, "X")
     elif turn == "O":
-        game[inp_cell].nought(inp_space)
+        game[inp_cell].oznaci_polje(inp_space, "O")
     inp_cell = inp_space
     turn = sign_switch(turn)
 
@@ -139,28 +138,28 @@ def start_game_2_ultimate():
         if master_celica.cells[inp_cell] == ".":
             inp_space = int(input_promt_fixed(f"{turn} naj izbere polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
             if turn == "X":
-                if current_cell.cross(inp_space):
+                if current_cell.oznaci_polje(inp_space, "X"):
                     turn = sign_switch(turn)
                     if current_cell.check_win():
-                        master_celica.cross(inp_cell)
+                        master_celica.oznaci_polje(inp_cell, "X")
                         num_turns += 1
                         current_cell.X_graphic()
                     elif current_cell.check_draw():
-                        master_celica.draw(inp_cell)
+                        master_celica.oznaci_polje(inp_cell, "+")
                         num_turns += 1
                         current_cell.Draw_graphic()
                     inp_cell = inp_space
                 else:
                     bad_choice = True
             elif turn == "O":
-                if current_cell.nought(inp_space):
+                if current_cell.oznaci_polje(inp_space, "O"):
                     turn = sign_switch(turn)
                     if current_cell.check_win():
-                        master_celica.nought(inp_cell)
+                        master_celica.oznaci_polje(inp_cell, "O")
                         num_turns += 1
                         current_cell.O_graphic()
                     elif current_cell.check_draw():
-                        master_celica.draw(inp_cell)
+                        master_celica.oznaci_polje(inp_cell, "+")
                         num_turns += 1
                         current_cell.Draw_graphic()
                     inp_cell = inp_space
@@ -182,11 +181,11 @@ def bot_win_block(cell, player_mark):
         test = Cell()
         if sign == ".":
             test.cells = dict(cell.cells)
-            test.cross(space)
+            test.oznaci_polje(space, "X")
             if test.check_win():
                 X_list.append(space)
             test.cells = dict(cell.cells)
-            test.nought(space)
+            test.oznaci_polje(space, "O")
             if test.check_win():
                 O_list.append(space)
     if player_mark == "O":
@@ -270,13 +269,13 @@ def start_game_1_vanila():
                 else:
                     inp = random.choice([key for key, value in game.cells.items() if value == "."])
         if player_turn:
-            if game.cross(inp):
+            if game.oznaci_polje(inp, "X"):
                 player_turn = not player_turn
                 num_turns += 1
             else:
                 bad_choice = True
         else:
-            if game.nought(inp):
+            if game.oznaci_polje(inp, "O"):
                 player_turn = not player_turn
                 num_turns += 1
             else:
@@ -293,6 +292,6 @@ def start_game_1_vanila():
 
 #start_game_1_vanila()
 #start_game_2_vanila()
-#start_game_2_ultimate()
+start_game_2_ultimate()
 test = Cell()
 
