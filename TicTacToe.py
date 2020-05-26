@@ -9,11 +9,6 @@ class Cell:
             return True
         else:
             return False
-        if self.cells[n] == ".":
-            self.cells[n] = "+"
-            return True
-        else:
-            return False
     def X_graphic(self):
         self.cells = {1 : "/", 2 : " ", 3 : "\\", 4 : " ", 5 : "X", 6 : " ", 7 : "\\", 8 : " ", 9 : "/"}
     def O_graphic(self):
