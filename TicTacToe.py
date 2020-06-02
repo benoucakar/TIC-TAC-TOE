@@ -271,9 +271,9 @@ def start_game_1_vanila():
     game = Cell()
     num_turns = 0
     player_mark = input_promt_fixed("Želite imeti križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
-    bot_mark = game.sign_switch(player_mark)
     player_turn = "y" == input_promt_fixed("Želite biti prvi?", "y/n", "Žal je bil vnos neustrezen.", ["y", "n"])
-   
+    current_mark = player_mark if player_turn else game.sign_switch(player_mark)
+
     dif = input_promt_fixed("Izberite težavnostno stopnjo. Večje kot je število, težje bo.", "(1 - 4)", "Žal je bil vnos neustrezen.", ["1", "2", "3", "4"])
     bot = Bot(player_mark, not player_turn)
     if dif == "1":
@@ -298,18 +298,13 @@ def start_game_1_vanila():
         else:
             inp = next(bot_generator)
 
-        if player_turn:
-            if game.oznaci_polje(inp, player_mark):
-                player_turn = not player_turn
-                num_turns += 1
-            else:
-                bad_choice = True
+        if game.oznaci_polje(inp, current_mark):
+            player_turn = not player_turn
+            current_mark = game.sign_switch(current_mark)
+            num_turns += 1
         else:
-            if game.oznaci_polje(inp, bot_mark):
-                player_turn = not player_turn
-                num_turns += 1
-            else:
-                bad_choice = True
+            bad_choice = True
+
     show_field_vanila(game)
     if game.check_win() and not player_turn:
         print("Čestitke!")
