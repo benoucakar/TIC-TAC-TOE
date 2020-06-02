@@ -5,26 +5,39 @@ ZNAK_NEODLOCEN = "+"
 class Cell:
     def __init__(self):
         self.cells = {1 : ".", 2 : ".", 3 : ".", 4 : ".", 5 : ".", 6 : ".", 7 : ".", 8 : ".", 9 : "."}
+
     def oznaci_polje(self, n, znak):
         if self.cells[n] == ".":
             self.cells[n] = znak
             return True
         else:
             return False
+
     def X_graphic(self):
         self.cells = {1 : "/", 2 : " ", 3 : "\\", 4 : " ", 5 : "X", 6 : " ", 7 : "\\", 8 : " ", 9 : "/"}
+
     def O_graphic(self):
         self.cells = {1 : "\\", 2 : "-", 3 : "/", 4 : "|", 5 : " ", 6 : "|", 7 : "/", 8 : "-", 9 : "\\"}
+
     def Draw_graphic(self):
         self.cells = {1 : "+", 2 : "+", 3 : "+", 4 : "+", 5 : "+", 6 : "+", 7 : "+", 8 : "+", 9 : "+"}
+
     def check_win(self):
         win_situations = [(1, 2, 3), (4, 5, 6), (7, 8, 9), (1, 4, 7), (2, 5, 8), (3, 6, 9), (3, 5, 7), (1, 5, 9)]
         for i, j, k in win_situations:
             if self.cells[i] == self.cells[j] == self.cells[k] != "." and self.cells[i] != ZNAK_NEODLOCEN:
                 return True
         return False
+
     def check_draw(self):
         return not ("." in self.cells.values() or self.check_win())
+
+    @staticmethod
+    def sign_switch(a):
+        if a == "X":
+            return "O"
+        elif a == "O":
+            return "X"
 
 class Vanila:
     None
@@ -32,11 +45,6 @@ class Vanila:
 class Ultimate:
     None
 
-def sign_switch(a):
-    if a == "X":
-        return "O"
-    elif a == "O":
-        return "X"
 
 def input_promt_fixed(question, input_text, fail_text, choice_list):
     """Poenostva nadzor nad vhodnimi podatki iz konzole. Vprašanje / pričakovani odgovori / opomba, če vnos ni ustrezen / seznam ustreznih vnosov """
@@ -83,13 +91,13 @@ def start_game_2_vanila():
             bad_choice = False
         inp = int(input_promt_fixed(f"Igralec {turn} je na potezi.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
         if game.oznaci_polje(inp, turn):
-            turn = sign_switch(turn)
+            turn = game.sign_switch(turn)
             num_turns += 1
         else:
             bad_choice = True
     show_field_vanila(game)
     if game.check_win():
-        print(f"Čestitke {sign_switch(turn)}!")
+        print(f"Čestitke {game.sign_switch(turn)}!")
     else:
         print("Igra je neodločena.")
 
@@ -114,7 +122,7 @@ def start_game_2_ultimate():
     inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
     game[inp_cell].oznaci_polje(inp_space, turn)
     inp_cell = inp_space
-    turn = sign_switch(turn)
+    turn = master_celica.sign_switch(turn)
 
     while not master_celica.check_win() and num_turns < 9:
         show_field_ultimate(game)
@@ -125,7 +133,7 @@ def start_game_2_ultimate():
         if master_celica.cells[inp_cell] == ".":
             inp_space = int(input_promt_fixed(f"{turn} naj izbere polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
             if current_cell.oznaci_polje(inp_space, turn):
-                turn = sign_switch(turn)
+                turn = master_celica.sign_switch(turn)
                 if current_cell.check_win():
                     master_celica.oznaci_polje(inp_cell, turn)
                     num_turns += 1
@@ -144,7 +152,7 @@ def start_game_2_ultimate():
 
     show_field_ultimate(game)
     if master_celica.check_win():
-        print(f"Čestitke {sign_switch(turn)}!")
+        print(f"Čestitke {master_celica.sign_switch(turn)}!")
     else:
         print("Igra je neodločena.")
 
@@ -213,13 +221,13 @@ def bot_vanila_optimal(cell, player_mark, bot_first):
         yield 0
 
 def start_game_1_vanila():
+    game = Cell()
+    num_turns = 0
     player_mark = input_promt_fixed("Želite imeti križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
-    bot_mark = sign_switch(player_mark)
+    bot_mark = game.sign_switch(player_mark)
     player_first = input_promt_fixed("Želite biti prvi?", "y/n", "Žal je bil vnos neustrezen.", ["y", "n"])
     player_turn = player_first == "y"
     # tezavnost = input_promt_fixed("Izberite težavnostno stopnjo. Večje kot je število, težje bo.", "(1 - 4)", "Žal je bil vnos neustrezen.", ["1", "2", "3", "4"])
-    game = Cell()
-    num_turns = 0
     bot = bot_vanila_optimal(game, player_mark, not player_turn)
     bad_choice = False
     print("Polja so številčena kot številčna tipkovnica.")
@@ -264,8 +272,8 @@ def start_game_1_vanila():
         
 
 
-start_game_1_vanila()
+#start_game_1_vanila()
 #start_game_2_vanila()
-#start_game_2_ultimate()
+start_game_2_ultimate()
 test = Cell()
 
