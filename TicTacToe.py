@@ -39,9 +39,6 @@ class Cell:
         elif a == "O":
             return "X"
 
-
-    None
-
 class Bot:
     def __init__(self, player_mark, bot_first):
         self.bot_first = bot_first
@@ -115,20 +112,37 @@ class Bot:
         return random.choice([key for key, value in cell.cells.items() if value == "."])
 
     def vanila_dif_1(self, cell):
-        yield self.random(cell)
+        while True:
+            yield self.random(cell)
     
     def vanila_dif_2(self, cell):
-        if random.randrange(0, 100) > 50:
-            yield self.random(cell)
-        else:
-            yield self.vanila_optimal(cell)
-    
+        bot_optimal_generator = self.vanila_optimal(cell)
+        inp = 0
+        while True:
+            if self.win_block(cell) != 0 and random.randrange(100) < 50:
+                inp = self.win_block(cell)
+            else:
+                temp = next(bot_optimal_generator)
+                if temp != 0 and random.randrange(100) < 75:
+                    inp = temp
+                else:
+                    inp = self.random(cell)
+            yield inp
+        
     def vanila_dif_3(self, cell):
-        if random.randrange(0, 100) > 90:
-            yield self.random(cell)
-        else:
-            yield self.vanila_optimal(cell)
-
+        bot_optimal_generator = self.vanila_optimal(cell)
+        inp = 0
+        while True:
+            if self.win_block(cell) != 0 and random.randrange(100) < 75:
+                inp = self.win_block(cell)
+            else:
+                temp = next(bot_optimal_generator)
+                if temp != 0 and random.randrange(100) < 85:
+                    inp = temp
+                else:
+                    inp = self.random(cell)
+            yield inp
+        
     def vanila_dif_4(self, cell):
         bot_optimal_generator = self.vanila_optimal(cell)
         inp = 0
@@ -143,7 +157,6 @@ class Bot:
                     inp = self.random(cell)
             yield inp
         
-
 def input_promt_fixed(question, input_text, fail_text, choice_list):
     """Poenostva nadzor nad vhodnimi podatki iz konzole. Vprašanje / pričakovani odgovori / opomba, če vnos ni ustrezen / seznam ustreznih vnosov """
     while True:
@@ -260,9 +273,18 @@ def start_game_1_vanila():
     player_mark = input_promt_fixed("Želite imeti križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
     bot_mark = game.sign_switch(player_mark)
     player_turn = "y" == input_promt_fixed("Želite biti prvi?", "y/n", "Žal je bil vnos neustrezen.", ["y", "n"])
-    # tezavnost = input_promt_fixed("Izberite težavnostno stopnjo. Večje kot je število, težje bo.", "(1 - 4)", "Žal je bil vnos neustrezen.", ["1", "2", "3", "4"])
+   
+    dif = input_promt_fixed("Izberite težavnostno stopnjo. Večje kot je število, težje bo.", "(1 - 4)", "Žal je bil vnos neustrezen.", ["1", "2", "3", "4"])
     bot = Bot(player_mark, not player_turn)
-    bot_generator = bot.vanila_dif_4(game)
+    if dif == "1":
+        bot_generator = bot.vanila_dif_1(game)
+    elif dif == "2":
+        bot_generator = bot.vanila_dif_2(game)
+    elif dif == "3":
+        bot_generator = bot.vanila_dif_3(game)
+    elif dif == "4":
+        bot_generator = bot.vanila_dif_4(game)
+
     bad_choice = False
     print("Polja so številčena kot številčna tipkovnica.")
     while not game.check_win() and num_turns < 9:
