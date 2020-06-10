@@ -31,7 +31,7 @@ class Cell:
 
     def check_draw(self):
         return not ("." in self.cells.values() or self.check_win())
-
+        
     @staticmethod
     def sign_switch(a):
         if a == "X":
@@ -312,7 +312,30 @@ def start_game_1_vanila():
         print("Žal ste izgubili. Več sreče prihodnjič.")
     else:
         print("Igra je neodločena.")
-        
+    
+def start_game_1_ultimate():
+    master_celica = Cell()
+    celica1 = Cell()
+    celica2 = Cell()
+    celica3 = Cell()
+    celica4 = Cell()
+    celica5 = Cell()
+    celica6 = Cell()
+    celica7 = Cell()
+    celica8 = Cell()
+    celica9 = Cell()
+    game = ["&", celica1, celica2, celica3, celica4, celica5, celica6, celica7, celica8, celica9]
+    num_turns = 0
+    player_mark = input_promt_fixed("Želite imeti križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
+    player_turn = "y" == input_promt_fixed("Želite biti prvi?", "y/n", "Žal je bil vnos neustrezen.", ["y", "n"])
+    bad_choice = False
+    print("Celice in polja so številčena kot številčna tipkovnica.")
+    show_field_ultimate(game)
+    current_mark = player_mark if player_turn else game.sign_switch(player_mark)
+
+    
+
+
 
 start_game_1_vanila()
 #start_game_2_vanila()
