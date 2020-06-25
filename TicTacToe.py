@@ -31,6 +31,13 @@ class Cell:
 
     def check_draw(self):
         return not ("." in self.cells.values() or self.check_win())
+    
+    def count_empty_space(self):
+        count = 0
+        for i in self.cells.items():
+            if i != ".":
+                count += 1
+        return count
         
     @staticmethod
     def sign_switch(a):
@@ -156,6 +163,14 @@ class Bot:
                 else:
                     inp = self.random(cell)
             yield inp
+    
+    def ultimate_density(self, game):
+        scores = []
+        for i in range(1, 9):
+            scores.append((i, game[i].count_empty_space()))
+        return max(scores, key=scores[1])[0]
+
+
         
 def input_promt_fixed(question, input_text, fail_text, choice_list):
     """Poenostva nadzor nad vhodnimi podatki iz konzole. Vprašanje / pričakovani odgovori / opomba, če vnos ni ustrezen / seznam ustreznih vnosov """
@@ -337,7 +352,7 @@ def start_game_1_ultimate():
 
 
 
-start_game_1_vanila()
+#start_game_1_vanila()
 #start_game_2_vanila()
 #start_game_2_ultimate()
 test = Cell()
