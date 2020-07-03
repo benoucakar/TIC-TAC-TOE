@@ -214,6 +214,7 @@ def show_field_ultimate(cells_list):
     print(f"| {cells_list[1].cells[1]} {cells_list[1].cells[2]} {cells_list[1].cells[3]} | {cells_list[2].cells[1]} {cells_list[2].cells[2]} {cells_list[2].cells[3]} | {cells_list[3].cells[1]} {cells_list[3].cells[2]} {cells_list[3].cells[3]} |")
     print(" " + "-" * 23 + " ")
 
+
 def start_game_2_vanila():
     game = Cell()
     turn = input_promt_fixed("Bi prvi igralec imel križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
@@ -297,7 +298,6 @@ def start_game_2_ultimate():
         print("Igra je neodločena.")
     input("Ko željite zaključiti, pritisnite ENTER.")
 
-
 def start_game_1_vanila():
     game = Cell()
     num_turns = 0
@@ -344,7 +344,6 @@ def start_game_1_vanila():
     else:
         print("Igra je neodločena.")
     input("Ko željite zaključiti, pritisnite ENTER.")
-
     
 def start_game_1_ultimate():
     master_celica = Cell()
@@ -380,10 +379,12 @@ def start_game_1_ultimate():
     player_turn = not player_turn
 
     while not master_celica.check_win() and num_master_turns < 9:
-        show_field_ultimate(game)
+        if player_turn:
+            show_field_ultimate(game)
 
         if bad_choice:
-            print("To polje je že zasedeno.")
+            if player_turn:
+                print("To polje je že zasedeno.")
             bad_choice = False
         
         current_cell = game[inp_cell]
@@ -392,7 +393,6 @@ def start_game_1_ultimate():
             if player_turn:
                 inp_space = int(input_promt_fixed(f"{player_mark} izberite polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
             else:
-                print(f"Računalnik je v celici {inp_cell}. Sedaj izbira polje")
                 inp_space = master_bot.ultimate_incell_move(game, inp_cell)
 
             if current_cell.oznaci_polje(inp_space, current_mark):
@@ -415,7 +415,6 @@ def start_game_1_ultimate():
                 print("Lahko greste kamorkoli.")
                 inp_cell = int(input_promt_fixed(f"{player_mark} izberite poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
             else:
-                print("Računalnik izbira celico.")
                 inp_cell = master_celica.random_free()
 
     show_field_ultimate(game)
@@ -429,9 +428,9 @@ def start_game_1_ultimate():
 
 
 
-start_game_1_vanila()
+#start_game_1_vanila()
 #start_game_2_vanila()
 #start_game_2_ultimate()
-#start_game_1_ultimate()
+start_game_1_ultimate()
 
 
