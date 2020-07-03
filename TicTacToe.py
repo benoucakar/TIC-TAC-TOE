@@ -362,24 +362,26 @@ def start_game_1_ultimate():
     player_turn = "y" == input_promt_fixed("Želite biti prvi?", "y/n", "Žal je bil vnos neustrezen.", ["y", "n"])
     master_bot = Bot(player_mark, not player_turn)
     bad_choice = False
-    print("Celice in polja so številčena kot številčna tipkovnica.")
     current_mark = player_mark if player_turn else master_celica.sign_switch(player_mark)
+    print("Celice in polja so številčena kot številčna tipkovnica.")
+    last_inp_space = 0
 
     if player_turn:
         show_field_ultimate(game)
         inp_cell = int(input_promt_fixed(f"Za začetek smete {player_mark} izbrati poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
         inp_space = int(input_promt_fixed(f"Sedaj {player_mark} izberite še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
     else:
-        print("Računalnik bo izbral celico in polje.")
         inp_cell = master_celica.random_free()
         inp_space = game[inp_cell].random_free()
     game[inp_cell].oznaci_polje(inp_space, current_mark)
+    last_inp_cell = inp_cell
     inp_cell = inp_space
     current_mark = master_celica.sign_switch(current_mark)
     player_turn = not player_turn
 
     while not master_celica.check_win() and num_master_turns < 9:
         if player_turn:
+            print(f"Računalnik je v celici {last_inp_cell} izbral polje {inp_cell}.")
             show_field_ultimate(game)
 
         if bad_choice:
@@ -404,6 +406,7 @@ def start_game_1_ultimate():
                     master_celica.oznaci_polje(inp_cell, "+")
                     num_master_turns += 1
                     current_cell.Draw_graphic()
+                last_inp_cell = inp_cell
                 inp_cell = inp_space
                 current_mark = master_celica.sign_switch(current_mark)
                 player_turn = not player_turn
