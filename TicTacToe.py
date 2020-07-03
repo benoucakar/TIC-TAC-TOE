@@ -1,7 +1,5 @@
 import random
 
-ZNAK_NEODLOCEN = "+"
-
 class Cell:
     def __init__(self):
         self.cells = dict(enumerate(["."] * 9, 1))
@@ -31,7 +29,7 @@ class Cell:
     def check_win(self):
         win_situations = [(1, 2, 3), (4, 5, 6), (7, 8, 9), (1, 4, 7), (2, 5, 8), (3, 6, 9), (3, 5, 7), (1, 5, 9)]
         for i, j, k in win_situations:
-            if self.cells[i] == self.cells[j] == self.cells[k] != "." and self.cells[i] != ZNAK_NEODLOCEN:
+            if self.cells[i] == self.cells[j] == self.cells[k] != "." and self.cells[i] != "+":
                 return True
         return False
 
@@ -124,7 +122,6 @@ class Bot:
         while True:
             yield 0
 
-
     def vanila_dif_1(self, cell):
         while True:
             yield cell.random_free()
@@ -183,8 +180,6 @@ class Bot:
             return self.win_block(game[inp_cell])
         else:
             return self.ultimate_density(game)
-
-
 
         
 def input_promt_fixed(question, input_text, fail_text, choice_list):
@@ -281,7 +276,7 @@ def start_game_2_ultimate():
                     num_turns += 1
                     current_cell.sign_graphic(turn)
                 elif current_cell.check_draw():
-                    master_celica.oznaci_polje(inp_cell, ZNAK_NEODLOCEN)
+                    master_celica.oznaci_polje(inp_cell, "+")
                     num_turns += 1
                     current_cell.Draw_graphic()
                 inp_cell = inp_space
@@ -399,7 +394,7 @@ def start_game_1_ultimate():
                     num_master_turns += 1
                     current_cell.sign_graphic(current_mark)
                 elif current_cell.check_draw():
-                    master_celica.oznaci_polje(inp_cell, ZNAK_NEODLOCEN)
+                    master_celica.oznaci_polje(inp_cell, "+")
                     num_master_turns += 1
                     current_cell.Draw_graphic()
                 inp_cell = inp_space
@@ -427,5 +422,5 @@ def start_game_1_ultimate():
 #start_game_1_vanila()
 #start_game_2_vanila()
 #start_game_2_ultimate()
-start_game_1_ultimate()
-test = Cell()
+#start_game_1_ultimate()
+
