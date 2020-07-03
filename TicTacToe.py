@@ -38,7 +38,10 @@ class Cell:
             if i != ".":
                 count += 1
         return count
-        
+    
+    def random(self):
+        return random.choice([key for key, value in self.cells.items() if value == "."])
+
     @staticmethod
     def sign_switch(a):
         if a == "X":
@@ -115,12 +118,10 @@ class Bot:
         while True:
             yield 0
 
-    def random(self, cell):
-        return random.choice([key for key, value in cell.cells.items() if value == "."])
 
     def vanila_dif_1(self, cell):
         while True:
-            yield self.random(cell)
+            yield cell.random()
     
     def vanila_dif_2(self, cell):
         bot_optimal_generator = self.vanila_optimal(cell)
@@ -133,7 +134,7 @@ class Bot:
                 if temp != 0 and random.randrange(100) < 75:
                     inp = temp
                 else:
-                    inp = self.random(cell)
+                    inp = cell.random()
             yield inp
         
     def vanila_dif_3(self, cell):
@@ -147,7 +148,7 @@ class Bot:
                 if temp != 0 and random.randrange(100) < 85:
                     inp = temp
                 else:
-                    inp = self.random(cell)
+                    inp = cell.random()
             yield inp
         
     def vanila_dif_4(self, cell):
@@ -161,7 +162,7 @@ class Bot:
                 if temp != 0:
                     inp = temp
                 else:
-                    inp = self.random(cell)
+                    inp = cell.random()
             yield inp
     
     def ultimate_density(self, game):
@@ -355,8 +356,8 @@ def start_game_1_ultimate():
         inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
         game[inp_cell].oznaci_polje(inp_space, turn)
         inp_cell = inp_space
-    else:
-        inp_cell = random.ra
+#    else:
+#        inp_cell = 
     while not master_celica.check_win() and num_master_turns < 9:
         show_field_ultimate(game)
 
@@ -394,7 +395,7 @@ def start_game_1_ultimate():
 
 
 
-#start_game_1_vanila()
+start_game_1_vanila()
 #start_game_2_vanila()
 #start_game_2_ultimate()
 test = Cell()
