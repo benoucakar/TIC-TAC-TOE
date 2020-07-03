@@ -175,7 +175,8 @@ class Bot:
         scores = []
         for i in range(1, 9):
             scores.append((i, game[i].count_empty_space()))
-        return max(scores, key=scores[1])[0]
+        random.shuffle(scores)
+        return max(scores, key=lambda par: par[1])[0]
 
     def ultimate_incell_move(self, game, inp_cell):
         if self.win_block(game[inp_cell]) != 0:
@@ -367,13 +368,15 @@ def start_game_1_ultimate():
 
     if player_turn:
         show_field_ultimate(game)
-        inp_cell = int(input_promt_fixed("Za začetek smete izbrati poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
-        inp_space = int(input_promt_fixed(f"Sedaj izberite še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+        inp_cell = int(input_promt_fixed(f"Za začetek smete {player_mark} izbrati poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+        inp_space = int(input_promt_fixed(f"Sedaj {player_mark} izberite še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
     else:
         inp_cell = master_celica.random_free()
         inp_space = game[inp_cell].random_free()
     game[inp_cell].oznaci_polje(inp_space, current_mark)
     inp_cell = inp_space
+    current_mark = master_celica.sign_switch(current_mark)
+    player_turn = not player_turn
 
     while not master_celica.check_win() and num_master_turns < 9:
         show_field_ultimate(game)
@@ -386,38 +389,43 @@ def start_game_1_ultimate():
 
         if master_celica.cells[inp_cell] == ".":
             if player_turn:
-                inp_space = int(input_promt_fixed(f"Izberite polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+                inp_space = int(input_promt_fixed(f"{player_mark} izberite polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
             else:
                 inp_space = master_bot.ultimate_incell_move(game, inp_cell)
 
             if current_cell.oznaci_polje(inp_space, current_mark):
-                turn = master_celica.sign_switch(turn)
                 if current_cell.check_win():
-                    master_celica.oznaci_polje(inp_cell, turn)
+                    master_celica.oznaci_polje(inp_cell, current_mark)
                     num_master_turns += 1
-                    current_cell.X_graphic()
+                    current_cell.sign_graphic(current_mark)
                 elif current_cell.check_draw():
                     master_celica.oznaci_polje(inp_cell, ZNAK_NEODLOCEN)
                     num_master_turns += 1
                     current_cell.Draw_graphic()
                 inp_cell = inp_space
+                current_mark = master_celica.sign_switch(current_mark)
+                player_turn = not player_turn
             else:
                 bad_choice = True
             
-        elif master_celica.cells[inp_cell] != ".":    
-            print(f"Ta celica je že zaključeno. {turn} lahko gre kamorkoli.")
-            inp_cell = int(input_promt_fixed(f"{turn} naj izbere poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+        elif master_celica.cells[inp_cell] != ".":
+            if player_turn:
+                print("Lahko greste kamorkoli.")
+                inp_cell = int(input_promt_fixed(f"{player_mark} izberite poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+            else:
+                inp_cell = master_celica.random_free()
 
     show_field_ultimate(game)
-    if master_celica.check_win():
-        print(f"Čestitke {master_celica.sign_switch(turn)}!")
-        
+    if master_celica.check_win() and not player_turn:
+        print("Čestitke!")
+    elif master_celica.check_win() and player_turn:
+        print("Žal ste izgubili. Več sreče prihodnjič.")
     else:
         print("Igra je neodločena.")
 
 
-
 #start_game_1_vanila()
 #start_game_2_vanila()
-start_game_2_ultimate()
+#start_game_2_ultimate()
+start_game_1_ultimate()
 test = Cell()
