@@ -426,6 +426,7 @@ def start_game_1_ultimate():
             else:
                 inp_cell = master_cell.random_free()
 
+    print(f"Računalnik je v celici {last_inp_cell} izbral polje {inp_cell}.")
     show_field_ultimate(game)
     if master_cell.check_win() and not player_turn:
         print("Čestitke!")
