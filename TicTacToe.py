@@ -236,6 +236,7 @@ def start_game_2_vanila():
         print(f"Čestitke {game.sign_switch(turn)}!")
     else:
         print("Igra je neodločena.")
+    input("Ko željite zaključiti, pritisnite ENTER.")
 
 def start_game_2_ultimate():
     master_celica = Cell()
@@ -294,6 +295,8 @@ def start_game_2_ultimate():
         show_field_vanila(master_celica)
     else:
         print("Igra je neodločena.")
+    input("Ko željite zaključiti, pritisnite ENTER.")
+
 
 def start_game_1_vanila():
     game = Cell()
@@ -340,6 +343,8 @@ def start_game_1_vanila():
         print("Žal ste izgubili. Več sreče prihodnjič.")
     else:
         print("Igra je neodločena.")
+    input("Ko željite zaključiti, pritisnite ENTER.")
+
     
 def start_game_1_ultimate():
     master_celica = Cell()
@@ -420,10 +425,13 @@ def start_game_1_ultimate():
         print("Žal ste izgubili. Več sreče prihodnjič.")
     else:
         print("Igra je neodločena.")
+    input("Ko željite zaključiti, pritisnite ENTER.")
 
 
-#start_game_1_vanila()
+
+start_game_1_vanila()
 #start_game_2_vanila()
 #start_game_2_ultimate()
-start_game_1_ultimate()
+#start_game_1_ultimate()
+
 
