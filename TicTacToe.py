@@ -255,7 +255,9 @@ def start_game_2_ultimate():
         if bad_choice:
             print("To polje je že zasedeno.")
             bad_choice = False
-        current_cell = game[inp_cell]        
+
+        current_cell = game[inp_cell]
+
         if master_celica.cells[inp_cell] == ".":
             inp_space = int(input_promt_fixed(f"{turn} naj izbere polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
             if current_cell.oznaci_polje(inp_space, turn):
@@ -340,15 +342,55 @@ def start_game_1_ultimate():
     celica8 = Cell()
     celica9 = Cell()
     game = ["&", celica1, celica2, celica3, celica4, celica5, celica6, celica7, celica8, celica9]
-    num_turns = 0
+    num_master_turns = 0
     player_mark = input_promt_fixed("Želite imeti križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
     player_turn = "y" == input_promt_fixed("Želite biti prvi?", "y/n", "Žal je bil vnos neustrezen.", ["y", "n"])
     bad_choice = False
     print("Celice in polja so številčena kot številčna tipkovnica.")
-    show_field_ultimate(game)
-    current_mark = player_mark if player_turn else game.sign_switch(player_mark)
+    current_mark = player_mark if player_turn else master_celica.sign_switch(player_mark)
 
-    
+    if player_turn:
+        show_field_ultimate(game)
+        inp_cell = int(input_promt_fixed(f"Za začetek sme {turn} izbrati poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+        inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+        game[inp_cell].oznaci_polje(inp_space, turn)
+        inp_cell = inp_space
+    else:
+        inp_cell = random.ra
+    while not master_celica.check_win() and num_master_turns < 9:
+        show_field_ultimate(game)
+
+        if bad_choice:
+            print("To polje je že zasedeno.")
+            bad_choice = False
+        
+        current_cell = game[inp_cell]
+
+        if master_celica.cells[inp_cell] == ".":
+            inp_space = int(input_promt_fixed(f"{turn} naj izbere polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+            if current_cell.oznaci_polje(inp_space, turn):
+                turn = master_celica.sign_switch(turn)
+                if current_cell.check_win():
+                    master_celica.oznaci_polje(inp_cell, turn)
+                    num_turns += 1
+                    current_cell.X_graphic()
+                elif current_cell.check_draw():
+                    master_celica.oznaci_polje(inp_cell, ZNAK_NEODLOCEN)
+                    num_turns += 1
+                    current_cell.Draw_graphic()
+                inp_cell = inp_space
+            else:
+                bad_choice = True
+            
+        elif master_celica.cells[inp_cell] != ".":    
+            print(f"Ta celica je že zaključeno. {turn} lahko gre kamorkoli.")
+            inp_cell = int(input_promt_fixed(f"{turn} naj izbere poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+
+    show_field_ultimate(game)
+    if master_celica.check_win():
+        print(f"Čestitke {master_celica.sign_switch(turn)}!")
+    else:
+        print("Igra je neodločena.")
 
 
 
