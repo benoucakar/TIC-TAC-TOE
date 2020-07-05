@@ -32,11 +32,11 @@ def show_field_ultimate(cells_list):
     print(f"| {cells_list[1].cells[1]} {cells_list[1].cells[2]} {cells_list[1].cells[3]} | {cells_list[2].cells[1]} {cells_list[2].cells[2]} {cells_list[2].cells[3]} | {cells_list[3].cells[1]} {cells_list[3].cells[2]} {cells_list[3].cells[3]} |")
     print(" " + "-" * 23 + " ")
 
-class vanila_2():
+class vanila_2:
     def __init__(self):
         self.game = Cell()
-        self.turn = input_promt_fixed("Bi prvi igralec imel križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
         self.num_turns = 0
+        self.turn = input_promt_fixed("Bi prvi igralec imel križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
         self.bad_choice = False
     
     def check_bad_move(self):
@@ -53,6 +53,7 @@ class vanila_2():
             self.bad_choice = True
 
     def main_game(self):
+        print("Polja so številčena kot številčna tipkovnica.")
         while not self.game.check_win() and self.num_turns < 9:
             show_field_vanila(self.game)
             self.check_bad_move()
@@ -71,53 +72,64 @@ def start_vanila_2():
     game.main_game()
     game.end_game()
 
-def start_game_1_vanila():
-    game = Cell()
-    num_turns = 0
-    player_mark = input_promt_fixed("Želite imeti križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
-    player_turn = "y" == input_promt_fixed("Želite biti prvi?", "y/n", "Žal je bil vnos neustrezen.", ["y", "n"])
-    current_mark = player_mark if player_turn else game.sign_switch(player_mark)
-    bad_choice = False
-
-    dif = input_promt_fixed("Izberite težavnostno stopnjo. Večje kot je število, težje bo.", "(1 - 4)", "Žal je bil vnos neustrezen.", ["1", "2", "3", "4"])
-    bot = Bot(player_mark, not player_turn)
-    if dif == "1":
-        bot_generator = bot.vanila_dif_1(game)
-    elif dif == "2":
-        bot_generator = bot.vanila_dif_2(game)
-    elif dif == "3":
-        bot_generator = bot.vanila_dif_3(game)
-    elif dif == "4":
-        bot_generator = bot.vanila_dif_4(game)
-
-    print("Polja so številčena kot številčna tipkovnica.")
-    while not game.check_win() and num_turns < 9:
-
-        if bad_choice:
+class vanila_1:
+    def __init__(self):
+        self.game = Cell()
+        self.num_turns = 0
+        self.player_mark = input_promt_fixed("Želite imeti križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
+        self.player_turn = "y" == input_promt_fixed("Želite biti prvi?", "y/n", "Žal je bil vnos neustrezen.", ["y", "n"])
+        self.current_mark = self.player_mark if self.player_turn else self.game.sign_switch(self.player_mark)
+        self.bad_choice = False
+        self.dif = input_promt_fixed("Izberite težavnostno stopnjo. Večje kot je število, težje bo.", "(1 - 4)", "Žal je bil vnos neustrezen.", ["1", "2", "3", "4"])
+        self.bot = Bot(self.player_mark, not self.player_turn)
+        if self.dif == "1":
+            self.bot_generator = self.bot.vanila_dif_1(self.game)
+        elif self.dif == "2":
+            self.bot_generator = self.bot.vanila_dif_2(self.game)
+        elif self.dif == "3":
+            self.bot_generator = self.bot.vanila_dif_3(self.game)
+        elif self.dif == "4":
+            self.bot_generator = self.bot.vanila_dif_4(self.game)
+    
+    def check_bad_move(self):
+        if self.bad_choice:
             print("To polje je že zasedeno.")
-            bad_choice = False
-
-        if player_turn:
-            show_field_vanila(game)
+            self.bad_choice = False
+    
+    def make_move(self):
+        if self.player_turn:
+            show_field_vanila(self.game)
             inp = int(input_promt_fixed(f"Ste na potezi.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
         else:
-            inp = next(bot_generator)
+            inp = next(self.bot_generator)
 
-        if game.mark_field(inp, current_mark):
-            player_turn = not player_turn
-            current_mark = game.sign_switch(current_mark)
-            num_turns += 1
+        if self.game.mark_field(inp, self.current_mark):
+            self.player_turn = not self.player_turn
+            self.current_mark = self.game.sign_switch(self.current_mark)
+            self.num_turns += 1
         else:
-            bad_choice = True
+            self.bad_choice = True
 
-    show_field_vanila(game)
-    if game.check_win() and not player_turn:
-        print("Čestitke!")
-    elif game.check_win() and player_turn:
-        print("Žal ste izgubili. Več sreče prihodnjič.")
-    else:
-        print("Igra je neodločena.")
-    input("Ko željite zaključiti, pritisnite ENTER.")
+    def main_game(self):
+        print("Polja so številčena kot številčna tipkovnica.")
+        while not self.game.check_win() and self.num_turns < 9:
+            self.check_bad_move()
+            self.make_move()
+    
+    def end_game(self):
+        show_field_vanila(self.game)
+        if self.game.check_win() and not self.player_turn:
+            print("Čestitke!")
+        elif self.game.check_win() and self.player_turn:
+            print("Žal ste izgubili. Več sreče prihodnjič.")
+        else:
+            print("Igra je neodločena.")
+        input("Ko željite zaključiti, pritisnite ENTER.")
+
+def start_vanila_1():
+    game = vanila_1()
+    game.main_game()
+    game.end_game()
 
 def start_game_2_ultimate():
     master_cell = Cell()
