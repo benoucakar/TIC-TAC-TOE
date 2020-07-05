@@ -148,6 +148,7 @@ class ultimate_2:
         self.num_master_turns = 0
         self.bad_choice = False
 
+    def pre_game(self):
         print("Polja so številčena kot številčna tipkovnica.")
         show_field_ultimate(self.game)
         self.inp_cell = int(input_promt_fixed(f"Za začetek sme {self.turn} izbrati poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
@@ -155,7 +156,7 @@ class ultimate_2:
         self.game[self.inp_cell].mark_field(self.inp_space, self.turn)
         self.inp_cell = self.inp_space
         self.turn = self.master_cell.sign_switch(self.turn)
-    
+
     def check_bad_move(self):
         if self.bad_choice:
             print("To polje je že zasedeno.")
@@ -204,6 +205,7 @@ class ultimate_2:
 
 def start_ultimate_2():
     game = ultimate_2()
+    game.pre_game()
     game.main_game()
     game.end_game()
 
@@ -227,6 +229,7 @@ class ultimate_1:
         self.bad_choice = False
         self.current_mark = self.player_mark if self.player_turn else self.master_cell.sign_switch(self.player_mark)
 
+    def pre_game(self):
         print("Celice in polja so številčena kot številčna tipkovnica.")
         if self.player_turn:
             show_field_ultimate(self.game)
@@ -306,5 +309,6 @@ class ultimate_1:
 
 def start_ultimate_1():
     game = ultimate_1()
+    game.pre_game()
     game.main_game()
     game.end_game()
