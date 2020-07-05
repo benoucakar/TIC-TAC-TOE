@@ -1,4 +1,4 @@
-from model import * 
+from model import *
 
 def input_promt_fixed(question, input_text, fail_text, choice_list):
     """Poenostva nadzor nad vhodnimi podatki iz konzole. Vprašanje / pričakovani odgovori / opomba, če vnos ni ustrezen / seznam ustreznih vnosov """
@@ -32,34 +32,44 @@ def show_field_ultimate(cells_list):
     print(f"| {cells_list[1].cells[1]} {cells_list[1].cells[2]} {cells_list[1].cells[3]} | {cells_list[2].cells[1]} {cells_list[2].cells[2]} {cells_list[2].cells[3]} | {cells_list[3].cells[1]} {cells_list[3].cells[2]} {cells_list[3].cells[3]} |")
     print(" " + "-" * 23 + " ")
 
-
-def start_game_2_vanila():
-    game = Cell()
-    turn = input_promt_fixed("Bi prvi igralec imel križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
-    num_turns = 0
-    bad_choice = False
-    print("Polja so številčena kot številčna tipkovnica.")
-
-    while not game.check_win() and num_turns < 9:
-        show_field_vanila(game)
-
-        if bad_choice:
+class vanila_2():
+    def __init__(self):
+        self.game = Cell()
+        self.turn = input_promt_fixed("Bi prvi igralec imel križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
+        self.num_turns = 0
+        self.bad_choice = False
+    
+    def check_bad_move(self):
+        if self.bad_choice:
             print("To polje je že zasedeno.")
-            bad_choice = False
-
-        inp = int(input_promt_fixed(f"Igralec {turn} je na potezi.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
-        if game.mark_field(inp, turn):
-            turn = game.sign_switch(turn)
-            num_turns += 1
+            self.bad_choice = False
+    
+    def make_move(self):
+        inp = int(input_promt_fixed(f"Igralec {self.turn} je na potezi.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+        if self.game.mark_field(inp, self.turn):
+            self.turn = self.game.sign_switch(self.turn)
+            self.num_turns += 1
         else:
-            bad_choice = True
+            self.bad_choice = True
 
-    show_field_vanila(game)
-    if game.check_win():
-        print(f"Čestitke {game.sign_switch(turn)}!")
-    else:
-        print("Igra je neodločena.")
-    input("Ko željite zaključiti, pritisnite ENTER.")
+    def main_game(self):
+        while not self.game.check_win() and self.num_turns < 9:
+            show_field_vanila(self.game)
+            self.check_bad_move()
+            self.make_move()
+            
+    def end_game(self):
+        show_field_vanila(self.game)
+        if self.game.check_win():
+            print(f"Čestitke {self.game.sign_switch(self.turn)}!")
+        else:
+            print("Igra je neodločena.")
+        input("Ko željite zaključiti, pritisnite ENTER.")
+
+def start_vanila_2():
+    game = vanila_2()
+    game.main_game()
+    game.end_game()
 
 def start_game_1_vanila():
     game = Cell()
