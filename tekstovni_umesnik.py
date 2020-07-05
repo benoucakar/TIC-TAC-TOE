@@ -131,66 +131,79 @@ def start_vanila_1():
     game.main_game()
     game.end_game()
 
-def start_game_2_ultimate():
-    master_cell = Cell()
-    cell1 = Cell()
-    cell2 = Cell()
-    cell3 = Cell()
-    cell4 = Cell()
-    cell5 = Cell()
-    cell6 = Cell()
-    cell7 = Cell()
-    cell8 = Cell()
-    cell9 = Cell()
-    game = ["&", cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9]
-    turn = input_promt_fixed("Bi prvi igralec imel križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
-    num_turns = 0
-    bad_choice = False
-    print("Celice in polja so številčena kot številčna tipkovnica.")
-
-    show_field_ultimate(game)
-    inp_cell = int(input_promt_fixed(f"Za začetek sme {turn} izbrati poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
-    inp_space = int(input_promt_fixed(f"{turn} naj izbere še polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
-    game[inp_cell].mark_field(inp_space, turn)
-    inp_cell = inp_space
-    turn = master_cell.sign_switch(turn)
-
-    while not master_cell.check_win() and num_turns < 9:
-        show_field_ultimate(game)
-        
-        if bad_choice:
+class ultimate_2:
+    def __init__(self):
+        self.master_cell = Cell()
+        self.cell1 = Cell()
+        self.cell2 = Cell()
+        self.cell3 = Cell()
+        self.cell4 = Cell()
+        self.cell5 = Cell()
+        self.cell6 = Cell()
+        self.cell7 = Cell()
+        self.cell8 = Cell()
+        self.cell9 = Cell()
+        self.game = ["&", self.cell1, self.cell2, self.cell3, self.cell4, self.cell5, self.cell6, self.cell7, self.cell8, self.cell9]
+        self.turn = input_promt_fixed("Bi prvi igralec imel križce ali krožce?", "X/O", "Žal je bil vnos neustrezen.", ["X", "O"])
+        self.num_master_turns = 0
+        self.bad_choice = False
+        show_field_ultimate(self.game)
+        self.inp_cell = int(input_promt_fixed(f"Za začetek sme {self.turn} izbrati poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+        self.inp_space = int(input_promt_fixed(f"{self.turn} naj izbere še polje v celici {self.inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+        self.game[self.inp_cell].mark_field(self.inp_space, self.turn)
+        self.inp_cell = self.inp_space
+        self.turn = self.master_cell.sign_switch(self.turn)
+    
+    def check_bad_move(self):
+        if self.bad_choice:
             print("To polje je že zasedeno.")
-            bad_choice = False
+            self.bad_choice = False
 
-        current_cell = game[inp_cell]
+    def move_in_small_cell(self, current_cell):
+        self.inp_space = int(input_promt_fixed(f"{self.turn} naj izbere polje v celici {self.inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+        if current_cell.mark_field(self.inp_space, self.turn):
+            if current_cell.check_win():
+                self.master_cell.mark_field(self.inp_cell, self.turn)
+                self.num_master_turns += 1
+                current_cell.print_sign_graphic(self.turn)
+            elif current_cell.check_draw():
+                self.master_cell.mark_field(self.inp_cell, "+")
+                self.num_master_turns += 1
+                current_cell.Draw_graphic()
+            self.inp_cell = self.inp_space
+            self.turn = self.master_cell.sign_switch(self.turn)
+        else:
+            self.bad_choice = True
+    
+    def move_in_big_cell(self):
+        print(f"Ta cell je že zaključeno. {self.turn} lahko gre kamorkoli.")
+        self.inp_cell = int(input_promt_fixed(f"{self.turn} naj izbere poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
 
-        if master_cell.cells[inp_cell] == ".":
-            inp_space = int(input_promt_fixed(f"{turn} naj izbere polje v celici {inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
-            if current_cell.mark_field(inp_space, turn):
-                if current_cell.check_win():
-                    master_cell.mark_field(inp_cell, turn)
-                    num_turns += 1
-                    current_cell.print_sign_graphic(turn)
-                elif current_cell.check_draw():
-                    master_cell.mark_field(inp_cell, "+")
-                    num_turns += 1
-                    current_cell.Draw_graphic()
-                inp_cell = inp_space
-                turn = master_cell.sign_switch(turn)
-            else:
-                bad_choice = True
-            
-        elif master_cell.cells[inp_cell] != ".":    
-            print(f"Ta cell je že zaključeno. {turn} lahko gre kamorkoli.")
-            inp_cell = int(input_promt_fixed(f"{turn} naj izbere poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
+    def make_move(self):
+        current_cell = self.game[self.inp_cell]
+        if self.master_cell.cells[self.inp_cell] == ".":
+            self.move_in_small_cell(current_cell)
+        else:
+            self.move_in_big_cell()
+    
+    def main_game(self):
+        while not self.master_cell.check_win() and self.num_master_turns < 9:
+            show_field_ultimate(self.game)
+            self.check_bad_move()
+            self.make_move()
+    
+    def end_game(self):
+        show_field_ultimate(self.game)
+        if self.master_cell.check_win():
+            print(f"Čestitke {self.master_cell.sign_switch(self.turn)}!")
+        else:
+            print("Igra je neodločena.")
+        input("Ko željite zaključiti, pritisnite ENTER.")
 
-    show_field_ultimate(game)
-    if master_cell.check_win():
-        print(f"Čestitke {master_cell.sign_switch(turn)}!")
-        show_field_vanila(master_cell)
-    else:
-        print("Igra je neodločena.")
-    input("Ko željite zaključiti, pritisnite ENTER.")
+def start_ultimate_2():
+    game = ultimate_2()
+    game.main_game()
+    game.end_game()
 
 def start_game_1_ultimate():
     master_cell = Cell()
