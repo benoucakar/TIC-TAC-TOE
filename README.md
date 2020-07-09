@@ -10,5 +10,5 @@ Preprosto poženite program `spletni_vmesnik.py` in sledite spletni strani.
 ## Pravila igre
 Pravila za obe igri so napisana na spletni strani. Več informacij o [običajni](https://en.wikipedia.org/wiki/Tic-tac-toe) različici in o [ultimativni](https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe), pa lahko najdete na wikipediji.
 Omeniti je treba, da obstaja več pravil za igranje ultimativnih križcev in krožcev. Razlika je predvsem, da ko je celica enkrat rešena,
-ni več mogoče nasprotnika poslati na to celico, temveč lahko gre tedaj na poljubno polje. S temi pravili, je igra ultimativnih križcev in krožcev
-iz stališča teorije iger še nerešena.
+ni več mogoče nasprotnika poslati na to celico, temveč lahko gre tedaj na poljubno polje. S temi pravili je igra ultimativnih križcev in krožcev,
+s stališča teorije iger še nerešena.
