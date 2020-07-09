@@ -1,14 +1,14 @@
-# Ultimate TicTacToe
+# TIC-TAC-TOE
 
-Klasična igra križcev in krožcev.  
-Če pa vam je v karanteni preveč dolg čas, se lahko preizkusite tudi v razširitvi igri: ultimativni križci in krožci.
+## Kaj je TIC-TAC-TOE
+Spletna stran TIC-TAC-TOE omogoča igranje običajne in ultimativne različice križcev in krožcev proti računalniku ali s soigralcem.
+Na strani so tudi navodila za igranje obeh različic in nekaj statistike o odigranih igrah.
 
-## Kako uporabljati program
-**Program je še v fazi razvoja**  
-Če želite igrati igro običajnih križcev in krožcev v dvoigralskem načinu, zaženite `start_game_2_vanila()`.  
-Nato sledite navodilom v konzoli.  
-Če želite igrati igro ultimativnih križcev in krožcev v dvoigralskem načinu, zaženite `start_game_2_ultimate()`.  
-Nato sledite navodilom v konzoli.  
+## Kako uporabljati program  
+Preprosto poženite program `spletni_vmesnik.py` in sledite spletni strani.
 
 ## Pravila igre
-Gotovo vsi znamo igrati običajne križce in krožce. Kako se igra ultimativno verzijo, pa si lahko pogledate na tej [spletni strani](https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe).
+Pravila za obe igri so napisana na spletni strani. Več informacij o [običajni](https://en.wikipedia.org/wiki/Tic-tac-toe) različici in o [ultimativni](https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe), pa lahko najdete na wikipediji.
+Omeniti je treba, da obstaja več pravil za igranje ultimativnih križcev in krožcev. Razlika je predvsem, da ko je celica enkrat rešena,
+ni več mogoče nasprotnika poslati na to celico, temveč lahko gre tedaj na poljubno polje. S temi pravili, je igra ultimativnih križcev in krožcev
+iz stališča teorije iger še nerešena.
