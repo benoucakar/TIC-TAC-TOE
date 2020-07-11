@@ -1,0 +1,82 @@
+% rebase("base.html", izbrani_zavihek="igre")
+
+% if game.state == "P":
+
+<h1>Dobrodošli v igri ultimativnih križcev in krožcev za eno osebo</h1>
+
+<form action="/igre/ultimate_1/" method="post">
+    <p>Prosim izberite, znak prvega igralca.</p>
+    <input type="radio" id="X" name="player_mark" value="X" required>
+    <label for="X">X</label><br>
+    <input type="radio" id="O" name="player_mark" value="O" required>
+    <label for="O">O</label><br>
+    <p>Želite biti prvi ali ne?</p>
+    <input type="radio" id="y" name="player_turn" value="1" required>
+    <label for="y">Da</label><br>
+    <input type="radio" id="n" name="player_turn" value="" required>
+    <label for="n">Ne</label><br>
+    <button type="submit">Pa začnimo!</button>
+</form>
+
+% elif game.state == "I":
+<h1>Prva poteza</h1>
+% include("_prikaz_ultimate.html", game=game)
+<form action="/igre/ultimate_1/" method="post">
+    <h1>Celica</h1>
+    %for i in range(1,10):
+    <input type="radio" id="i" name="inp_cell" value={{i}} required>
+    <label for="i">{{i}}</label><br>
+    %end
+    <h1>Polje</h1>
+    %for i in range(1,10):
+    <input type="radio" id="i" name="inp_space" value={{i}} required>
+    <label for="i">{{i}}</label><br>
+    %end
+    <button type="submit">Ugibaj</button>
+</form>
+
+% elif game.state == "M" and not game.move_in_big_cell:
+    % if game.last_inp_cell != 0:
+    <h1>Računalnik je v celici {{game.last_inp_cell}} izbral polje {{game.inp_cell}}</h1>
+    % end
+<h1>Izberi polje v celici {{game.inp_cell}}</h1>
+% include("_prikaz_ultimate.html", game=game)
+<form action="/igre/ultimate_1/" method="post">
+    <h1>Polje</h1>
+    %for i in range(1,10):
+    <input type="radio" id="i" name="inp_space" value={{i}} required>
+    <label for="i">{{i}}</label><br>
+    %end
+    <button type="submit">Ugibaj</button>
+</form>
+
+% elif game.state == "M" and game.move_in_big_cell:
+
+<h1>Računalnik vas je poslal v celico {{game.inp_cell}}</h1>
+<h1>Izberi poljubno celico.</h1>
+% include("_prikaz_ultimate.html", game=game)
+<form action="/igre/ultimate_1/" method="post">
+    <h1>Celica</h1>
+    %for i in range(1,10):
+    <input type="radio" id="i" name="inp_cell" value={{i}} required>
+    <label for="i">{{i}}</label><br>
+    %end
+    <button type="submit">Ugibaj</button>
+</form>
+
+% elif game.state == "E":
+
+<h1>Igre je konec.</h1>
+% include("_prikaz_ultimate.html", game=game)
+% if game.master_cell.check_win() and not game.player_turn:
+<h1>Čestitke!</h1>
+% elif game.master_cell.check_win() and game.player_turn:
+<h1>Žal ste izgubili. Več sreče prihodnjič.</h1>
+% else:
+<h1>Igra je neodločena.</h1>
+% end
+<form action="/igre/ultimate_1/" method="post">
+    <button type="submit">Zaključi z igro</button>
+</form>
+
+% end
