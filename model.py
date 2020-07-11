@@ -186,10 +186,9 @@ class Vanila_2:
     def __init__(self):
         self.cell = Cell()
         self.num_turns = 0
-        self.turn = ""
         self.bad_choice = False
         self.state = "P"
-        
+
     def choose_parameters(self, first_player_mark):
         self.turn = first_player_mark
 
@@ -207,7 +206,41 @@ class Vanila_2:
     def reset(self):
         self.cell = Cell()
         self.num_turns = 0
-        self.turn = ""
         self.bad_choice = False
         self.state = "P"
 
+class Vanila_1:
+    # P - pre game, M - main game, E - end game
+    def __init__(self):
+        self.cell = Cell()
+        self.num_turns = 0
+        self.state = "P"
+        
+    def choose_parameters(self, player_mark, player_turn, difficulty):
+        self.player_mark = player_mark
+        self.player_turn = player_turn
+        self.current_mark = self.player_mark if self.player_turn else self.cell.sign_switch(self.player_mark)
+        self.dif = difficulty
+        self.bot = Bot(self.player_mark, not self.player_turn)
+        if self.dif == "1":
+            self.bot_generator = self.bot.vanila_dif_1(self.cell)
+        elif self.dif == "2":
+            self.bot_generator = self.bot.vanila_dif_2(self.cell)
+        elif self.dif == "3":
+            self.bot_generator = self.bot.vanila_dif_3(self.cell)
+        elif self.dif == "4":
+            self.bot_generator = self.bot.vanila_dif_4(self.cell)
+
+    def make_move(self, inp_space):
+        if self.cell.mark_field(inp_space, self.current_mark):
+            self.player_turn = not self.player_turn
+            self.current_mark = self.cell.sign_switch(self.current_mark)
+            self.num_turns += 1
+            return True
+        else:
+            return False
+
+    def reset(self):
+        self.cell = Cell()
+        self.num_turns = 0
+        self.state = "P"
