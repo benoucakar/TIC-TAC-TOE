@@ -293,19 +293,3 @@ class Ultimate_2:
                 current_cell.Draw_graphic()
             self.inp_cell = self.inp_space
             self.turn = self.master_cell.sign_switch(self.turn)
-
-#
-    #def make_move(self):
-    #    current_cell = self.cell_list[self.inp_cell]
-    #    if self.master_cell.cells[self.inp_cell] == ".":
-    #        self.move_in_small_cell(current_cell)
-    #    else:
-    #        self.move_in_big_cell()
-    #
-    #def main_game(self):
-    #    while not self.master_cell.check_win() and self.num_master_turns < 9:
-    #        show_field_ultimate(self.cell_list)
-    #        self.check_bad_move()
-    #        self.make_move()
-    
-    
