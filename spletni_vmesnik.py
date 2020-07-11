@@ -21,10 +21,6 @@ def igra():
 def pravila():
     return bottle.template("pravila.html")
 
-@bottle.get("/info/")
-def info():
-    return bottle.template("info.html")
-
 # Vanila_2
 vanila_2 = Vanila_2()
 
