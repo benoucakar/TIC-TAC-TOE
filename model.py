@@ -168,18 +168,23 @@ class Bot:
                     inp = cell.random_free()
             yield inp
     
-    def ultimate_density(self, game):
+    def ultimate_density(self, cell_list):
         scores = []
         for i in range(1, 9):
-            scores.append((i, game[i].count_empty_space()))
+            scores.append((i, cell_list[i].count_empty_space()))
         random.shuffle(scores)
         return max(scores, key=lambda par: par[1])[0]
 
-    def ultimate_incell_move(self, game, inp_cell):
-        if self.win_block(game[inp_cell]) != 0:
-            return self.win_block(game[inp_cell])
+    def ultimate_incell_move(self, cell_list, inp_cell):
+        if self.win_block(cell_list[inp_cell]) != 0:
+            return self.win_block(cell_list[inp_cell])
         else:
-            return self.ultimate_density(game)
+            flag = True
+            while flag:
+                kand = self.ultimate_density(cell_list)
+                if cell_list[inp_cell].cells[kand] == ".":
+                    flag = False
+            return kand
 
 class Vanila_2:
     # P - pre game, M - main game, E - end game
@@ -319,8 +324,14 @@ class Ultimate_1:
         self.current_mark = self.player_mark if self.player_turn else self.master_cell.sign_switch(self.player_mark)
 
     def initial_move(self, inp_cell, inp_space):
-        None
-    
+        self.inp_cell = inp_cell
+        self.inp_space = inp_space
+        self.cell_list[self.inp_cell].mark_field(self.inp_space, self.current_mark)
+        self.last_inp_cell = self.inp_cell
+        self.inp_cell = self.inp_space
+        self.current_mark = self.master_cell.sign_switch(self.current_mark)
+        self.player_turn = not self.player_turn
+
     def reset(self):
         self.master_cell = Cell()
         self.cell1 = Cell()
@@ -338,33 +349,6 @@ class Ultimate_1:
         self.move_in_big_cell = False
 
     def move_in_small_cell(self, current_cell):
-        None
-
-    def pre_game(self):
-        print("Celice in polja so številčena kot številčna tipkovnica.")
-        if self.player_turn:
-            show_field_ultimate(self.game)
-            self.inp_cell = int(input_promt_fixed(f"Za začetek smete {self.player_mark} izbrati poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
-            self.inp_space = int(input_promt_fixed(f"Sedaj {self.player_mark} izberite še polje v celici {self.inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
-        else:
-            self.inp_cell = self.master_cell.random_free()
-            self.inp_space = self.game[self.inp_cell].random_free()
-        self.game[self.inp_cell].mark_field(self.inp_space, self.current_mark)
-        self.last_inp_cell = self.inp_cell
-        self.inp_cell = self.inp_space
-        self.current_mark = self.master_cell.sign_switch(self.current_mark)
-        self.player_turn = not self.player_turn
-    
-    def show_robot_info_and_field(self):
-        if self.player_turn:
-            print(f"Računalnik je v celici {self.last_inp_cell} izbral polje {self.inp_cell}.")
-            show_field_ultimate(self.game)
-
-    def move_in_small_cell(self, current_cell):
-        if self.player_turn:
-            self.inp_space = int(input_promt_fixed(f"{self.player_mark} izberite polje v celici {self.inp_cell}.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
-        else:
-            self.inp_space = self.master_bot.ultimate_incell_move(self.game, self.inp_cell)
         if current_cell.mark_field(self.inp_space, self.current_mark):
             if current_cell.check_win():
                 self.master_cell.mark_field(self.inp_cell, self.current_mark)
@@ -378,36 +362,3 @@ class Ultimate_1:
             self.inp_cell = self.inp_space
             self.current_mark = self.master_cell.sign_switch(self.current_mark)
             self.player_turn = not self.player_turn
-        else:
-            self.bad_choice = True
-
-    def move_in_big_cell(self):
-        if self.player_turn:
-            print("Lahko greste kamorkoli.")
-            self.inp_cell = int(input_promt_fixed(f"{self.player_mark} izberite poljubno celico.", "(1 - 9)", "Žal je bil vnos neustrezen.", [str(i) for i in range(1, 10)]))
-        else:
-            self.inp_cell = self.master_cell.random_free()
-
-    def make_move(self):
-        current_cell = self.game[self.inp_cell]
-        if self.master_cell.cells[self.inp_cell] == ".":
-            self.move_in_small_cell(current_cell)
-        else:
-            self.move_in_big_cell()
-
-    def main_game(self):
-        while not self.master_cell.check_win() and self.num_master_turns < 9:
-            self.show_robot_info_and_field()
-            self.check_bad_move()
-            self.make_move()
-
-    def end_game(self):
-        print(f"Računalnik je v celici {self.last_inp_cell} izbral polje {self.inp_cell}.")
-        show_field_ultimate(self.game)
-        if self.master_cell.check_win() and not self.player_turn:
-            print("Čestitke!")
-        elif self.master_cell.check_win() and self.player_turn:
-            print("Žal ste izgubili. Več sreče prihodnjič.")
-        else:
-            print("Igra je neodločena.")
-        input("Ko željite zaključiti, pritisnite ENTER.")
