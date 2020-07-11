@@ -1,0 +1,55 @@
+% rebase("base.html", izbrani_zavihek="igre") 
+ 
+% if game.state == "P":
+
+<h1>Dobrodošli v obicajni igri križcev in krožcev za eno osebo</h1>
+<form action="/vanila_1/" method="post">
+    <p>Prosim izberite, znak prvega igralca.</p>
+    <input type="radio" id="X" name="player_mark" value="X" required>
+    <label for="X">X</label><br>
+    <input type="radio" id="O" name="player_mark" value="O" required>
+    <label for="O">O</label><br>
+    <p>Želite biti prvi ali ne?</p>
+    <input type="radio" id="y" name="player_turn" value="1" required>
+    <label for="y">Da</label><br>
+    <input type="radio" id="n" name="player_turn" value="" required>
+    <label for="n">Ne</label><br>
+    <p>Izberite težavnostno stopnjo.</p>
+    <input type="radio" id="1" name="difficulty" value="1" required>
+    <label for="1">Lahko</label><br>
+    <input type="radio" id="2" name="difficulty" value="2" required>
+    <label for="2">Težko</label><br>
+    <input type="radio" id="3" name="difficulty" value="3" required>
+    <label for="3">Zelo težko</label><br>
+    <input type="radio" id="4" name="difficulty" value="4" required>
+    <label for="4">Nemogoče</label><br>
+    <button type="submit">Pa začnimo!</button>
+</form>
+
+% elif game.state == "M":
+
+<h1>Tu je dejanska igra.</h1>
+<h1>{{game.current_mark}} je na potezi.</h1>
+% include("_prikaz_vanila.html", game=game)
+<form action="/vanila_1/" method="post">
+    %for i in range(1,10):
+    <input type="radio" id="i" name="inp_space" value={{i}} required>
+    <label for="i">{{i}}</label><br>
+    %end
+    <button type="submit">Ugibaj</button>
+</form>
+
+% elif game.state == "E":
+
+<h1>Igre je konec.</h1>
+% include("_prikaz_vanila.html", game=game)
+% if game.cell.check_win() and not game.player_turn:
+<h1>Čestitke!</h1>
+%elif game.cell.check_win() and game.player_turn:
+<h1>Žal ste izgubili. Več sreče prihodnjič.</h1>
+% else:
+<h1>Igra je neodločena.</h1>
+%end
+<form action="/vanila_1/" method="post">
+    <button type="submit">Zaključi z igro</button>
+</form>
