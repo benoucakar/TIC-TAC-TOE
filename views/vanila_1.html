@@ -3,7 +3,7 @@
 % if game.state == "P":
 
 <h1>Dobrodošli v obicajni igri križcev in krožcev za eno osebo</h1>
-<form action="/vanila_1/" method="post">
+<form action="/igre/vanila_1/" method="post">
     <p>Prosim izberite, znak prvega igralca.</p>
     <input type="radio" id="X" name="player_mark" value="X" required>
     <label for="X">X</label><br>
@@ -31,7 +31,7 @@
 <h1>Tu je dejanska igra.</h1>
 <h1>{{game.current_mark}} je na potezi.</h1>
 % include("_prikaz_vanila.html", game=game)
-<form action="/vanila_1/" method="post">
+<form action="/igre/vanila_1/" method="post">
     %for i in range(1,10):
     <input type="radio" id="i" name="inp_space" value={{i}} required>
     <label for="i">{{i}}</label><br>
@@ -50,6 +50,6 @@
 % else:
 <h1>Igra je neodločena.</h1>
 %end
-<form action="/vanila_1/" method="post">
+<form action="/igre/vanila_1/" method="post">
     <button type="submit">Zaključi z igro</button>
 </form>
