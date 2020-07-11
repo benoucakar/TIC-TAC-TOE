@@ -236,3 +236,76 @@ class Vanila_1:
         self.cell = Cell()
         self.num_turns = 0
         self.state = "P"
+
+class Ultimate_2:
+    # P - pre game, I - initial move, M - main game, E - end game
+    def __init__(self):
+        self.master_cell = Cell()
+        self.cell1 = Cell()
+        self.cell2 = Cell()
+        self.cell3 = Cell()
+        self.cell4 = Cell()
+        self.cell5 = Cell()
+        self.cell6 = Cell()
+        self.cell7 = Cell()
+        self.cell8 = Cell()
+        self.cell9 = Cell()
+        self.cell_list = ["&", self.cell1, self.cell2, self.cell3, self.cell4, self.cell5, self.cell6, self.cell7, self.cell8, self.cell9]
+        self.num_master_turns = 0
+        self.state = "P"
+        self.move_in_big_cell = False
+
+    def choose_parameters(self, first_player_mark):
+        self.turn = first_player_mark
+
+    def initial_move(self, inp_cell, inp_space):
+        self.inp_cell = inp_cell
+        self.inp_space = inp_space
+        self.cell_list[self.inp_cell].mark_field(self.inp_space, self.turn)
+        self.inp_cell = self.inp_space
+        self.turn = self.master_cell.sign_switch(self.turn)
+    
+    def reset(self):
+        self.master_cell = Cell()
+        self.cell1 = Cell()
+        self.cell2 = Cell()
+        self.cell3 = Cell()
+        self.cell4 = Cell()
+        self.cell5 = Cell()
+        self.cell6 = Cell()
+        self.cell7 = Cell()
+        self.cell8 = Cell()
+        self.cell9 = Cell()
+        self.cell_list = ["&", self.cell1, self.cell2, self.cell3, self.cell4, self.cell5, self.cell6, self.cell7, self.cell8, self.cell9]
+        self.num_master_turns = 0
+        self.state = "P"
+        self.move_in_big_cell = False
+
+    def move_in_small_cell(self, current_cell):
+        if current_cell.mark_field(self.inp_space, self.turn):
+            if current_cell.check_win():
+                self.master_cell.mark_field(self.inp_cell, self.turn)
+                self.num_master_turns += 1
+                current_cell.print_sign_graphic(self.turn)
+            elif current_cell.check_draw():
+                self.master_cell.mark_field(self.inp_cell, "+")
+                self.num_master_turns += 1
+                current_cell.Draw_graphic()
+            self.inp_cell = self.inp_space
+            self.turn = self.master_cell.sign_switch(self.turn)
+
+#
+    #def make_move(self):
+    #    current_cell = self.cell_list[self.inp_cell]
+    #    if self.master_cell.cells[self.inp_cell] == ".":
+    #        self.move_in_small_cell(current_cell)
+    #    else:
+    #        self.move_in_big_cell()
+    #
+    #def main_game(self):
+    #    while not self.master_cell.check_win() and self.num_master_turns < 9:
+    #        show_field_ultimate(self.cell_list)
+    #        self.check_bad_move()
+    #        self.make_move()
+    
+    

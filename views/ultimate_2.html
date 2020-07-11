@@ -1,0 +1,72 @@
+% rebase("base.html", izbrani_zavihek="igre")
+
+% if game.state == "P":
+
+<h1>Dobrodošli v igri ultimativnih križcev in krožcev za dve osebi</h1>
+<p>Prosim izberite, znak prvega igralca.</p>
+<form action="/igre/ultimate_2/" method="post">
+    <input type="radio" id="X" name="first_player_mark" value="X" required>
+    <label for="X">X</label><br>
+    <input type="radio" id="O" name="first_player_mark" value="O" required>
+    <label for="O">O</label><br>
+    <button type="submit">Pa začnimo!</button>
+</form>
+
+% elif game.state == "I":
+<h1>Prva poteza</h1>
+% include("_prikaz_ultimate.html", game=game)
+<form action="/igre/ultimate_2/" method="post">
+    <h1>Celica</h1>
+    %for i in range(1,10):
+    <input type="radio" id="i" name="inp_cell" value={{i}} required>
+    <label for="i">{{i}}</label><br>
+    %end
+    <h1>Polje</h1>
+    %for i in range(1,10):
+    <input type="radio" id="i" name="inp_space" value={{i}} required>
+    <label for="i">{{i}}</label><br>
+    %end
+    <button type="submit">Ugibaj</button>
+</form>
+
+% elif game.state == "M" and not game.move_in_big_cell:
+<h1>{{game.turn}} Izberi polje v celici {{game.inp_cell}}</h1>
+% include("_prikaz_ultimate.html", game=game)
+<form action="/igre/ultimate_2/" method="post">
+    <h1>Polje</h1>
+    %for i in range(1,10):
+    <input type="radio" id="i" name="inp_space" value={{i}} required>
+    <label for="i">{{i}}</label><br>
+    %end
+    <button type="submit">Ugibaj</button>
+</form>
+
+% elif game.state == "M" and game.move_in_big_cell:
+
+<h1>{{game.turn}} Izberi poljubno celico.</h1>
+% include("_prikaz_ultimate.html", game=game)
+<form action="/igre/ultimate_2/" method="post">
+    <h1>Celica</h1>
+    %for i in range(1,10):
+    <input type="radio" id="i" name="inp_cell" value={{i}} required>
+    <label for="i">{{i}}</label><br>
+    %end
+    <button type="submit">Ugibaj</button>
+</form>
+
+% elif game.state == "E":
+<h1>Igre je konec.</h1>
+% include("_prikaz_ultimate.html", game=game)
+% if game.master_cell.check_win():
+<h1>Čestitke {{game.master_cell.sign_switch(game.turn)}}</h1>
+% else:
+<h1>Igra je neodločena.</h1>
+% end
+<form action="/igre/ultimate_2/" method="post">
+    <button type="submit">Zaključi z igro</button>
+</form>
+
+% end
+
+
+

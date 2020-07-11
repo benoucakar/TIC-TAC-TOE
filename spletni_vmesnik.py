@@ -86,6 +86,51 @@ def vanila_1_post():
 def vanila_1_get():
     return bottle.template("vanila_1.html", game=vanila_1)
 
+# Ultimate_2
+ultimate_2 = Ultimate_2()
 
+@bottle.post("/igre/ultimate_2/")
+def ultimate_2_post():
+    if ultimate_2.state == "P":
+        first_player_mark = bottle.request.forms.getunicode('first_player_mark')
+        ultimate_2.choose_parameters(first_player_mark)
+        ultimate_2.state = "I"
+        bottle.redirect("/igre/ultimate_2/")
+
+    elif ultimate_2.state == "I":
+        inp_cell = int(bottle.request.forms.getunicode('inp_cell'))
+        inp_space = int(bottle.request.forms.getunicode('inp_space'))
+        ultimate_2.initial_move(inp_cell, inp_space)
+        ultimate_2.state = "M"
+        bottle.redirect("/igre/ultimate_2/")
+    
+    elif ultimate_2.state == "M":
+        current_cell = ultimate_2.cell_list[ultimate_2.inp_cell]
+        if not ultimate_2.move_in_big_cell:
+            ultimate_2.inp_space = int(bottle.request.forms.getunicode('inp_space'))
+            ultimate_2.move_in_small_cell(current_cell)
+        if ultimate_2.move_in_big_cell:
+            ultimate_2.inp_cell = int(bottle.request.forms.getunicode('inp_cell'))
+            ultimate_2.move_in_big_cell = False
+
+        if ultimate_2.master_cell.cells[ultimate_2.inp_cell] == ".":
+            None
+        else:
+            ultimate_2.move_in_big_cell = True
+
+        if not ultimate_2.master_cell.check_win() and ultimate_2.num_master_turns < 9:
+            None
+        else:
+            ultimate_2.state = "E"
+        bottle.redirect("/igre/ultimate_2/")
+
+    elif ultimate_2.state == "E":
+        ultimate_2.reset()
+        bottle.redirect("/igre/")
+
+
+@bottle.get("/igre/ultimate_2/")
+def ultimate_2_get():
+    return bottle.template("ultimate_2.html", game=ultimate_2)
 
 bottle.run(debug=True, reloader=True)
