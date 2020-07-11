@@ -186,27 +186,19 @@ class Vanila_2:
     def __init__(self):
         self.cell = Cell()
         self.num_turns = 0
-        self.bad_choice = False
         self.state = "P"
 
     def choose_parameters(self, first_player_mark):
         self.turn = first_player_mark
-
-    def check_bad_move(self):
-        if self.bad_choice:
-            self.bad_choice = False
     
     def make_move(self, inp_space):
         if self.cell.mark_field(inp_space, self.turn):
             self.turn = self.cell.sign_switch(self.turn)
             self.num_turns += 1
-        else:
-            self.bad_choice = True
 
     def reset(self):
         self.cell = Cell()
         self.num_turns = 0
-        self.bad_choice = False
         self.state = "P"
 
 class Vanila_1:

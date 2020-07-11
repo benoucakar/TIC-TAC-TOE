@@ -36,7 +36,6 @@ def vanila_2_post():
         bottle.redirect("/igre/vanila_2/")
     elif vanila_2.state == "M":
         inp_space = int(bottle.request.forms.getunicode('inp_space'))
-        vanila_2.check_bad_move()
         vanila_2.make_move(inp_space)
         if not vanila_2.cell.check_win() and vanila_2.num_turns < 9:
             None
