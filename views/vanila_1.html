@@ -1,4 +1,4 @@
-% rebase("base.html", izbrani_zavihek="igre") 
+% rebase("base.html", izbrani_zavihek="igre")
  
 % if game.state == "P":
 
@@ -49,7 +49,9 @@
 <h1>Žal ste izgubili. Več sreče prihodnjič.</h1>
 % else:
 <h1>Igra je neodločena.</h1>
-%end
+% end
 <form action="/igre/vanila_1/" method="post">
     <button type="submit">Zaključi z igro</button>
 </form>
+
+% end

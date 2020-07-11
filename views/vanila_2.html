@@ -33,7 +33,9 @@
 <h1>Čestitke {{game.cell.sign_switch(game.turn)}}</h1>
 % else:
 <h1>Igra je neodločena.</h1>
-%end
+% end
 <form action="/igre/vanila_2/" method="post">
     <button type="submit">Zaključi z igro</button>
 </form>
+
+% end
