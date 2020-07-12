@@ -1,17 +1,28 @@
 import bottle
 from model import *
 
+COOKIE = "user_id"
+SECRET = "Zemlja je torus."
 
+user_tracker = User_tracker()
 
 #Klicanje spletnih strani
 
 @bottle.get("/")
 def index():
+    return bottle.template("index.html")
+
+@bottle.post("/")
+def new_user():
+    user_id = user_tracker.new_user()
+    bottle.response.set_cookie(COOKIE, str(user_id), path='/', secret=SECRET)
     bottle.redirect("/domov/")
+
 
 @bottle.get("/domov/")
 def domov():
-    return bottle.template("domov.html")
+    user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
+    return bottle.template("domov.html" , user_id = user_id)
 
 @bottle.get("/igre/")
 def igra():
@@ -22,10 +33,10 @@ def pravila():
     return bottle.template("pravila.html")
 
 # Vanila_2
-vanila_2 = Vanila_2()
-
 @bottle.post("/igre/vanila_2/")
 def vanila_2_post():
+    user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
+    vanila_2 = user_tracker.users[user_id][1]
     if vanila_2.state == "P":
         vanila_2.choose_parameters(bottle.request.forms.getunicode('player_mark'))
         vanila_2.state = "M"
@@ -44,13 +55,15 @@ def vanila_2_post():
 
 @bottle.get("/igre/vanila_2/")
 def vanila_2_get():
+    user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
+    vanila_2 = user_tracker.users[user_id][1]
     return bottle.template("vanila_2.html", game=vanila_2)
 
 # Vanila_1
-vanila_1 = Vanila_1()
-
 @bottle.post("/igre/vanila_1/")
 def vanila_1_post():
+    user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
+    vanila_1 = user_tracker.users[user_id][0]
     if vanila_1.state == "P":
         player_mark = bottle.request.forms.getunicode('player_mark')
         player_turn = bool(bottle.request.forms.getunicode('player_turn'))
@@ -80,13 +93,15 @@ def vanila_1_post():
 
 @bottle.get("/igre/vanila_1/")
 def vanila_1_get():
+    user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
+    vanila_1 = user_tracker.users[user_id][0]
     return bottle.template("vanila_1.html", game=vanila_1)
 
 # Ultimate_2
-ultimate_2 = Ultimate_2()
-
 @bottle.post("/igre/ultimate_2/")
 def ultimate_2_post():
+    user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
+    ultimate_2 = user_tracker.users[user_id][3]
     if ultimate_2.state == "P":
         first_player_mark = bottle.request.forms.getunicode('first_player_mark')
         ultimate_2.choose_parameters(first_player_mark)
@@ -127,13 +142,15 @@ def ultimate_2_post():
 
 @bottle.get("/igre/ultimate_2/")
 def ultimate_2_get():
+    user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
+    ultimate_2 = user_tracker.users[user_id][3]
     return bottle.template("ultimate_2.html", game=ultimate_2)
 
 # Ultimate_1
-ultimate_1 = Ultimate_1()
-
 @bottle.post("/igre/ultimate_1/")
 def ultimate_1_post():
+    user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
+    ultimate_1 = user_tracker.users[user_id][2]
     if ultimate_1.state == "P":
         player_mark = bottle.request.forms.getunicode('player_mark')
         player_turn = bool(bottle.request.forms.getunicode('player_turn'))
@@ -218,6 +235,8 @@ def ultimate_1_post():
 
 @bottle.get("/igre/ultimate_1/")
 def ultimate_1_get():
+    user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
+    ultimate_1 = user_tracker.users[user_id][2]
     return bottle.template("ultimate_1.html", game=ultimate_1)
 
 bottle.run(debug=True, reloader=True)

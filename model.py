@@ -362,3 +362,22 @@ class Ultimate_1:
             self.inp_cell = self.inp_space
             self.current_mark = self.master_cell.sign_switch(self.current_mark)
             self.player_turn = not self.player_turn
+
+class User_tracker:
+    def __init__(self):
+        self.users = {}
+    
+    def free_id(self):
+        if len(self.users) == 0:
+            return 0
+        else:
+            return max(self.users.keys()) + 1
+    
+    def new_user(self):
+        user_id = self.free_id()
+        vanila_1 = Vanila_1()
+        vanila_2 = Vanila_2()
+        ultimate_1 = Ultimate_1()
+        ultimate_2 = Ultimate_2()
+        self.users[user_id] = (vanila_1, vanila_2, ultimate_1, ultimate_2)
+        return user_id
