@@ -1,7 +1,38 @@
 % rebase('base.html', izbrani_zavihek='domov')
 
-<div class="box">
-    <p>Ljubo doma, kdor ga ima!</p>
+<div class="tile is-ancestor">
+    <div class="tile is-parent is-8 is-shady">
+        <article class="tile is-child notification is-white">
+            <h1 class="title is-1">Domača stran</h1>
+            <p class="subtitle has-text-weight-semibold">
+                Dobrodošli v TIC-TAC-TOE!
+            </p>
+        </article>
+    </div>
 </div>
 
-<h1>{{user_id}}</h1>
+<article class="tile is-child notification is-link">
+    <div class="content">
+        <div class="box">
+            <p class="has-text-justified has-text-black is-size-5 has-text-weight-semibold">
+                <i class="fas fa-gamepad"></i>
+                Spletna stran TIC-TAC-TOE omogoča igranje običajne in ultimativne različice križcev in krožcev
+                proti računalniku ali s soigralcem.
+            </p>
+            <p class="has-text-justified has-text-black is-size-5 has-text-weight-semibold">
+                <i class="fas fa-question"></i>
+                Tu lahko najdete pravila za igranje običajne in ultimativne različice križcev in krožcev,
+                igre, ki jih boste našli na TIC-TAC-TOE.
+            </p>
+            <p class="has-text-justified has-text-black is-size-5 has-text-weight-semibold">
+                <i class="fas fa-chart-line"></i>
+                Na voljo je tudi nekaj statističnih podatkov o preteklih igrah in dosežkih igralcev.
+            </p>
+        </div>
+        <div class="box">
+            <p class="has-text-justified has-text-black is-size-5 has-text-weight-semibold">
+                Spletna stran TIC-TAC-TOE je projektna naloga za predmet Uvod v programiranje.
+            </p>
+        </div>
+    </div>
+</article>
