@@ -44,8 +44,8 @@
 <h1>Igre je konec.</h1>
 % include("_prikaz_vanila.html", game=game)
 % if game.cell.check_win() and not game.player_turn:
-<h1>Čestitke!</h1>
-%elif game.cell.check_win() and game.player_turn:
+<h1>Čestitke {{game.player_mark}}!</h1>
+% elif game.cell.check_win() and game.player_turn:
 <h1>Žal ste izgubili. Več sreče prihodnjič.</h1>
 % else:
 <h1>Igra je neodločena.</h1>

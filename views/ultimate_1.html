@@ -69,7 +69,7 @@
 <h1>Igre je konec.</h1>
 % include("_prikaz_ultimate.html", game=game)
 % if game.master_cell.check_win() and not game.player_turn:
-<h1>Čestitke!</h1>
+<h1>Čestitke {{game.player_mark}}!</h1>
 % elif game.master_cell.check_win() and game.player_turn:
 <h1>Žal ste izgubili. Več sreče prihodnjič.</h1>
 % else:
