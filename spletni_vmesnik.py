@@ -149,7 +149,7 @@ def ultimate_2_post():
             ultimate_2.inp_cell = int(bottle.request.forms.getunicode('inp_cell'))
             ultimate_2.move_in_big_cell = False
 
-        if ultimate_2.master_cell.cells[ultimate_2.inp_cell] == ".":
+        if ultimate_2.master_cell.spaces[ultimate_2.inp_cell] == ".":
             None
         else:
             ultimate_2.move_in_big_cell = True
@@ -216,14 +216,14 @@ def ultimate_1_post():
             current_cell = ultimate_1.cell_list[ultimate_1.inp_cell]
             if not ultimate_1.move_in_big_cell:
                 inp_space_kand = int(bottle.request.forms.getunicode('inp_space'))
-                if ultimate_1.cell_list[ultimate_1.inp_cell].cells[inp_space_kand] == ".":
+                if ultimate_1.cell_list[ultimate_1.inp_cell].spaces[inp_space_kand] == ".":
                     ultimate_1.inp_space = inp_space_kand
                     ultimate_1.move_in_small_cell(current_cell)
                 else:
                     bottle.redirect("/igre/ultimate_1/")
             else:
                 inp_cell_kand = int(bottle.request.forms.getunicode('inp_cell'))
-                if ultimate_1.master_cell.cells[inp_cell_kand] == ".":
+                if ultimate_1.master_cell.spaces[inp_cell_kand] == ".":
                     ultimate_1.inp_cell = inp_cell_kand
                     ultimate_1.move_in_big_cell = False
                     # Da se ne pokaže zadnja poteza robota
@@ -232,7 +232,7 @@ def ultimate_1_post():
                 else:
                     bottle.redirect("/igre/ultimate_1/")
 
-        if ultimate_1.master_cell.cells[ultimate_1.inp_cell] == ".":
+        if ultimate_1.master_cell.spaces[ultimate_1.inp_cell] == ".":
             None
         else:
             ultimate_1.move_in_big_cell = True
@@ -248,7 +248,7 @@ def ultimate_1_post():
                     ultimate_1.inp_cell = ultimate_1.master_cell.random_free()
                     ultimate_1.move_in_big_cell = False
                 
-            if ultimate_1.master_cell.cells[ultimate_1.inp_cell] == ".":
+            if ultimate_1.master_cell.spaces[ultimate_1.inp_cell] == ".":
                 None
             else:
                 ultimate_1.move_in_big_cell = True
