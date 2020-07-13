@@ -5,6 +5,7 @@ COOKIE = "user_id"
 SECRET = "Zemlja je torus."
 
 user_tracker = User_tracker()
+data_manager = Data_manager(DATOTEKA_STANJA)
 
 #Klicanje spletnih strani
 
@@ -18,7 +19,6 @@ def new_user():
     bottle.response.set_cookie(COOKIE, str(user_id), path='/', secret=SECRET)
     bottle.redirect("/domov/")
 
-
 @bottle.get("/domov/")
 def domov():
     user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
@@ -31,6 +31,12 @@ def igra():
 @bottle.get("/pravila/")
 def pravila():
     return bottle.template("pravila.html")
+
+@bottle.get("/statistika/")
+def statistika():
+    data_manager.load_data_from_file()
+    data_manager.data_for_stats()
+    return bottle.template("statistika.html", data_manager = data_manager)
 
 # Vanila_2
 @bottle.post("/igre/vanila_2/")
@@ -50,6 +56,15 @@ def vanila_2_post():
             vanila_2.state = "E"
         bottle.redirect("/igre/vanila_2/")
     elif vanila_2.state == "E":
+        data_manager.data["ended_V2"] += 1
+        if vanila_2.cell.check_win():
+            if vanila_2.turn == "X":
+                data_manager.data["player_win_O"] += 1
+            elif vanila_2.turn == "O":
+                data_manager.data["player_win_X"] += 1
+        else:
+            data_manager.data["ended_draw"] += 1
+        data_manager.dump_data_to_file()
         vanila_2.reset()
         bottle.redirect("/igre/")
 
@@ -88,6 +103,16 @@ def vanila_1_post():
         bottle.redirect("/igre/vanila_1/")
 
     elif vanila_1.state == "E":
+        data_manager.data["ended_V1"] += 1
+        if vanila_1.cell.check_win() and not vanila_1.player_turn:
+            data_manager.data["player_beat_bot"] += 1
+            if vanila_1.player_mark == "X":
+                data_manager.data["player_win_X"] += 1
+            elif vanila_1.player_mark == "O":
+                data_manager.data["player_win_O"] += 1
+        elif not vanila_1.cell.check_win():
+            data_manager.data["ended_draw"] += 1
+        data_manager.dump_data_to_file()
         vanila_1.reset()
         bottle.redirect("/igre/")
 
@@ -136,6 +161,15 @@ def ultimate_2_post():
         bottle.redirect("/igre/ultimate_2/")
 
     elif ultimate_2.state == "E":
+        data_manager.data["ended_U2"] += 1
+        if ultimate_2.master_cell.check_win():
+            if ultimate_2.turn == "X":
+                data_manager.data["player_win_O"] += 1
+            elif ultimate_2.turn == "O":
+                data_manager.data["player_win_X"] += 1
+        else:
+            data_manager.data["ended_draw"] += 1
+        data_manager.dump_data_to_file()
         ultimate_2.reset()
         bottle.redirect("/igre/")
 
@@ -230,6 +264,17 @@ def ultimate_1_post():
 
 
     elif ultimate_1.state == "E":
+        data_manager.data["ended_U1"] += 1
+        if ultimate_1.master_cell.check_win() and not ultimate_1.player_turn:
+            data_manager.data["player_beat_bot"] += 1
+            if ultimate_1.player_mark == "X":
+                data_manager.data["player_win_X"] += 1
+            elif ultimate_1.player_mark == "O":
+                data_manager.data["player_win_O"] += 1
+        elif not ultimate_1.master_cell.check_win():
+            data_manager.data["ended_draw"] += 1
+        data_manager.dump_data_to_file()
+
         ultimate_1.reset()
         bottle.redirect("/igre/")
 

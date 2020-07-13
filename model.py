@@ -1,4 +1,7 @@
 import random
+import json
+
+DATOTEKA_STANJA = 'stanje.json'
 
 class Cell:
     def __init__(self):
@@ -381,3 +384,27 @@ class User_tracker:
         ultimate_2 = Ultimate_2()
         self.users[user_id] = (vanila_1, vanila_2, ultimate_1, ultimate_2)
         return user_id
+
+class Data_manager:
+    def __init__(self, file):
+        self.file = file
+        self.load_data_from_file()
+
+    def load_data_from_file(self): 
+        with open(self.file, 'r', encoding='utf-8') as f: 
+            self.data = json.load(f)
+
+    def dump_data_to_file(self): 
+        with open(self.file, 'w', encoding='utf-8') as f: 
+            json.dump(self.data, f)
+    
+    def data_for_stats(self):
+        self.ended_V1 = self.data["ended_V1"]
+        self.ended_V2 = self.data["ended_V2"]
+        self.ended_U1 = self.data["ended_U1"]
+        self.ended_U2 = self.data["ended_U2"]
+        self.ended_games = self.ended_V1 + self.ended_V2 + self.ended_U1 + self.ended_U2
+        self.ended_draw = self.data["ended_draw"]
+        self.player_win_X = self.data["player_win_X"]
+        self.player_win_O = self.data["player_win_O"]
+        self.player_beat_bot = self.data["player_beat_bot"]
