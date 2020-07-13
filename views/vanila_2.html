@@ -15,7 +15,7 @@
 % elif game.state == "M":
 
 <h1>Tu je dejanska igra.</h1>
-<h1>{{game.turn}} je na potezi.</h1>
+<h1>{{game.mark}} je na potezi.</h1>
 % include("_prikaz_vanila.html", game=game)
 <form action="/igre/vanila_2/" method="post">
     %for i in range(1,10):
@@ -30,7 +30,7 @@
 <h1>Igre je konec.</h1>
 % include("_prikaz_vanila.html", game=game)
 % if game.cell.check_win():
-<h1>Čestitke {{game.cell.sign_switch(game.turn)}}</h1>
+<h1>Čestitke {{game.cell.sign_switch(game.mark)}}</h1>
 % else:
 <h1>Igra je neodločena.</h1>
 % end

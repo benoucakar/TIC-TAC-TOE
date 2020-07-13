@@ -58,9 +58,9 @@ def vanila_2_post():
     elif vanila_2.state == "E":
         data_manager.data["ended_V2"] += 1
         if vanila_2.cell.check_win():
-            if vanila_2.turn == "X":
+            if vanila_2.mark == "X":
                 data_manager.data["player_win_O"] += 1
-            elif vanila_2.turn == "O":
+            elif vanila_2.mark == "O":
                 data_manager.data["player_win_X"] += 1
         else:
             data_manager.data["ended_draw"] += 1
@@ -163,9 +163,9 @@ def ultimate_2_post():
     elif ultimate_2.state == "E":
         data_manager.data["ended_U2"] += 1
         if ultimate_2.master_cell.check_win():
-            if ultimate_2.turn == "X":
+            if ultimate_2.mark == "X":
                 data_manager.data["player_win_O"] += 1
-            elif ultimate_2.turn == "O":
+            elif ultimate_2.mark == "O":
                 data_manager.data["player_win_X"] += 1
         else:
             data_manager.data["ended_draw"] += 1

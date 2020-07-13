@@ -30,7 +30,7 @@
 </form>
 
 % elif game.state == "M" and not game.move_in_big_cell:
-<h1>{{game.turn}} Izberi polje v celici {{game.inp_cell}}</h1>
+<h1>{{game.mark}} Izberi polje v celici {{game.inp_cell}}</h1>
 % include("_prikaz_ultimate.html", game=game)
 <form action="/igre/ultimate_2/" method="post">
     <h1>Polje</h1>
@@ -43,7 +43,7 @@
 
 % elif game.state == "M" and game.move_in_big_cell:
 
-<h1>{{game.turn}} Izberi poljubno celico.</h1>
+<h1>{{game.mark}} Izberi poljubno celico.</h1>
 % include("_prikaz_ultimate.html", game=game)
 <form action="/igre/ultimate_2/" method="post">
     <h1>Celica</h1>
@@ -58,7 +58,7 @@
 <h1>Igre je konec.</h1>
 % include("_prikaz_ultimate.html", game=game)
 % if game.master_cell.check_win():
-<h1>Čestitke {{game.master_cell.sign_switch(game.turn)}}</h1>
+<h1>Čestitke {{game.master_cell.sign_switch(game.mark)}}</h1>
 % else:
 <h1>Igra je neodločena.</h1>
 % end
