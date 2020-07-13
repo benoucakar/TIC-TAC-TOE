@@ -1,4 +1,4 @@
-% rebase("base.html", izbrani_zavihek="igre")
+% rebase("base.html", izbrani_zavihek="igre", prikaz_naslova = False)
 
 % if game.state == "P":
 
@@ -36,9 +36,9 @@
 </form>
 
 % elif game.state == "M" and not game.move_in_big_cell:
-    % if game.last_inp_cell != 0:
-    <h1>Računalnik je v celici {{game.last_inp_cell}} izbral polje {{game.inp_cell}}</h1>
-    % end
+% if game.last_inp_cell != 0:
+<h1>Računalnik je v celici {{game.last_inp_cell}} izbral polje {{game.inp_cell}}</h1>
+% end
 <h1>Izberi polje v celici {{game.inp_cell}}</h1>
 % include("_prikaz_ultimate.html", game=game)
 <form action="/igre/ultimate_1/" method="post">

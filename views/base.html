@@ -83,7 +83,7 @@
         </div>
     </nav>
     <section class="section">
-        % if defined("izbrani_zavihek"):
+        % if defined("izbrani_zavihek") and prikaz_naslova == True:
         % for zavihek in zavihki:
         % if zavihek == izbrani_zavihek:
         <div class="tile is-ancestor">
