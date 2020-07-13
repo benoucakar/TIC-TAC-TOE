@@ -68,6 +68,7 @@ class Cell:
             return "X"
 
 class Bot:
+    """Program, ki bo igral proti igralcu."""
     def __init__(self, player_mark, bot_first):
         self.player_mark = player_mark
         self.bot_first = bot_first
@@ -207,6 +208,7 @@ class Bot:
             return kand
 
 class Vanila_2:
+    """Običajni križci in krožci za dva igralca."""
     def __init__(self):
         self.cell = Cell()
         self.num_turns = 0
@@ -229,6 +231,7 @@ class Vanila_2:
         self.state = "P"
 
 class Vanila_1:
+    """Običajni križci in krožci za enega igralca."""
     def __init__(self):
         self.cell = Cell()
         self.num_turns = 0
@@ -267,6 +270,7 @@ class Vanila_1:
         self.state = "P"
 
 class Ultimate_2:
+    """Ultimativni križci in krožci za dva igralca."""
     def __init__(self):
         self.master_cell = Cell()
         self.cell1 = Cell()
@@ -327,6 +331,7 @@ class Ultimate_2:
         self.move_in_big_cell = False
 
 class Ultimate_1:
+    """Ultimativni križci in krožci za enega igralca."""
     def __init__(self):
         self.master_cell = Cell()
         self.cell1 = Cell()
@@ -394,6 +399,7 @@ class Ultimate_1:
         self.move_in_big_cell = False
 
 class User_tracker:
+    """Funkcije, ki sledijo uporabnikom."""
     def __init__(self):
         self.users = {}
     
@@ -415,6 +421,7 @@ class User_tracker:
         return user_id
 
 class Data_manager:
+    """Funkcije, ki skrbijo za podatke."""
     def __init__(self, file):
         self.file = file
         self.load_data_from_file()
