@@ -1,11 +1,83 @@
 % rebase('base.html', izbrani_zavihek='statistika')
 
-<h1>V1: {{data_manager.ended_V1}}</h1>
-<h1>V2: {{data_manager.ended_V2}}</h1>
-<h1>U1: {{data_manager.ended_U1}}</h1>
-<h1>U2: {{data_manager.ended_U2}}</h1>
-<h1>št. odigranih: {{data_manager.ended_games}}</h1>
-<h1>neodločeno: {{data_manager.ended_draw}}</h1>
-<h1>X: {{data_manager.player_win_X}}</h1>
-<h1>O: {{data_manager.player_win_O}}</h1>
-<h1>premagal Bot: {{data_manager.player_beat_bot}}</h1>
+<div class="tile is-ancestor">
+    <div class="tile is-parent is-8 is-shady">
+        <article class="tile is-child notification is-white">
+            <h1 class="title is-1">Statistika</h1>
+            <p class="subtitle has-text-weight-semibold">
+                Nekaj podatkov o odigranih igrah.
+            </p>
+        </article>
+    </div>
+</div>
+<article class="tile is-child notification is-link">
+    <div class="content">
+        <section class="is-centered">
+            <div class="tile is-ancestor">
+                <div class="tile is-parent">
+                    <article class="tile is-child box has-text-black">
+                        <p class="title">Število zaključenih iger:</p>
+                        <b class="is-size-1">{{data_manager.ended_games}}</b>
+                    </article>
+                </div>
+                <div class="tile is-parent">
+                    <article class="tile is-child box has-text-black">
+                        <p class="title">Zmage proti računalnik:</p>
+                        <b class="is-size-1">{{data_manager.player_beat_bot}}</b>
+                    </article>
+                </div>
+                <div class="tile is-parent">
+                    <article class="tile is-child box has-text-black">
+                        <p class="title">Število neodločenih iger:</p>
+                        <b class="is-size-1">{{data_manager.ended_draw}}</b>
+                    </article>
+                </div>
+            </div>
+            <div class="tile is-ancestor">
+                <div class="tile is-parent is-1">
+                    <article class="tile is-child box has-text-centered has-text-black">
+                        <b class="is-size-1">X</b>
+                    </article>
+                </div>
+                <div class="tile is-parent is-10">
+                    <article class="tile is-child box has-text-black">
+                        <p class="title">Razmerje med križci in krožci:</p>
+                        <progress class="progress is-link" value="{{data_manager.player_win_X}}"
+                            max="{{data_manager.player_win_X + data_manager.player_win_O}}"></progress>
+                    </article>
+                </div>
+                <div class="tile is-parent is-1">
+                    <article class="tile is-child box has-text-centered has-text-black">
+                        <b class="is-size-1">O</b>
+                    </article>
+                </div>
+            </div>
+            <div class="tile is-ancestor">
+                <div class="tile is-parent">
+                    <article class="tile is-child box has-text-black">
+                        <p class="title">Običajni križci in krožci<br>Enoigralski način</p>
+                        <b class="is-size-1">{{data_manager.ended_V1}}</b>
+                    </article>
+                </div>
+                <div class="tile is-parent">
+                    <article class="tile is-child box has-text-black">
+                        <p class="title">Običajni križci in krožci<br>Dvoigralski način</p>
+                        <b class="is-size-1">{{data_manager.ended_V2}}</b>
+                    </article>
+                </div>
+                <div class="tile is-parent">
+                    <article class="tile is-child box has-text-black">
+                        <p class="title">Ultimativni križci in krožci<br>Enoigralski način</p>
+                        <b class="is-size-1">{{data_manager.ended_U1}}</b>
+                    </article>
+                </div>
+                <div class="tile is-parent">
+                    <article class="tile is-child box has-text-black">
+                        <p class="title">Ultimativni križci in krožci<br>Dvoigralski način</p>
+                        <b class="is-size-1">{{data_manager.ended_U2}}</b>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </div>
+</article>
