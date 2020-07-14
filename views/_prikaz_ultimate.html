@@ -1,101 +1,131 @@
+<style>
+    .ultimate_td_light {
+        width: 60px;
+        height: 60px;
+        padding: 5px;
+        text-align: center;
+        background-color: hsl(0, 0%, 96%);
+        border: 2px solid hsl(0, 0%, 48%);
+    }
+    .ultimate_td_dark {
+        width: 60px;
+        height: 60px;
+        padding: 5px;
+        text-align: center;
+        background-color: hsl(0, 0%, 86%);
+        border: 2px solid hsl(0, 0%, 48%);
+    }
+    .ultimate_p {
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    #ultimate_table{
+        margin-top: 15px;
+    }
+</style>
+
 <div class="container">
     <div class="columns is-centered">
-        <table table class="table is-bordered is-centered">
+        <table id="ultimate_table">
             <tr>
-                <td>{{game.cell_list[7].spaces[7]}}</td>
-                <td>{{game.cell_list[7].spaces[8]}}</td>
-                <td>{{game.cell_list[7].spaces[9]}}</td>
-                <td>{{game.cell_list[8].spaces[7]}}</td>
-                <td>{{game.cell_list[8].spaces[8]}}</td>
-                <td>{{game.cell_list[8].spaces[9]}}</td>
-                <td>{{game.cell_list[9].spaces[7]}}</td>
-                <td>{{game.cell_list[9].spaces[8]}}</td>
-                <td>{{game.cell_list[9].spaces[9]}}</td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[7].spaces[7]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[7].spaces[8]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[7].spaces[9]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[8].spaces[7]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[8].spaces[8]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[8].spaces[9]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[9].spaces[7]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[9].spaces[8]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[9].spaces[9]}}</p></td>
             </tr>
             <tr>
-                <td>{{game.cell_list[7].spaces[4]}}</td>
-                <td>{{game.cell_list[7].spaces[5]}}</td>
-                <td>{{game.cell_list[7].spaces[6]}}</td>
-                <td>{{game.cell_list[8].spaces[4]}}</td>
-                <td>{{game.cell_list[8].spaces[5]}}</td>
-                <td>{{game.cell_list[8].spaces[6]}}</td>
-                <td>{{game.cell_list[9].spaces[4]}}</td>
-                <td>{{game.cell_list[9].spaces[5]}}</td>
-                <td>{{game.cell_list[9].spaces[6]}}</td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[7].spaces[4]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[7].spaces[5]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[7].spaces[6]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[8].spaces[4]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[8].spaces[5]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[8].spaces[6]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[9].spaces[4]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[9].spaces[5]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[9].spaces[6]}}</p></td>
             </tr>
             <tr>
-                <td>{{game.cell_list[7].spaces[1]}}</td>
-                <td>{{game.cell_list[7].spaces[2]}}</td>
-                <td>{{game.cell_list[7].spaces[3]}}</td>
-                <td>{{game.cell_list[8].spaces[1]}}</td>
-                <td>{{game.cell_list[8].spaces[2]}}</td>
-                <td>{{game.cell_list[8].spaces[3]}}</td>
-                <td>{{game.cell_list[9].spaces[1]}}</td>
-                <td>{{game.cell_list[9].spaces[2]}}</td>
-                <td>{{game.cell_list[9].spaces[3]}}</td>
-            </tr><tr>
-                <td>{{game.cell_list[4].spaces[7]}}</td>
-                <td>{{game.cell_list[4].spaces[8]}}</td>
-                <td>{{game.cell_list[4].spaces[9]}}</td>
-                <td>{{game.cell_list[5].spaces[7]}}</td>
-                <td>{{game.cell_list[5].spaces[8]}}</td>
-                <td>{{game.cell_list[5].spaces[9]}}</td>
-                <td>{{game.cell_list[6].spaces[7]}}</td>
-                <td>{{game.cell_list[6].spaces[8]}}</td>
-                <td>{{game.cell_list[6].spaces[9]}}</td>
-            </tr><tr>
-                <td>{{game.cell_list[4].spaces[4]}}</td>
-                <td>{{game.cell_list[4].spaces[5]}}</td>
-                <td>{{game.cell_list[4].spaces[6]}}</td>
-                <td>{{game.cell_list[5].spaces[4]}}</td>
-                <td>{{game.cell_list[5].spaces[5]}}</td>
-                <td>{{game.cell_list[5].spaces[6]}}</td>
-                <td>{{game.cell_list[6].spaces[4]}}</td>
-                <td>{{game.cell_list[6].spaces[5]}}</td>
-                <td>{{game.cell_list[6].spaces[6]}}</td>
-            </tr><tr>
-                <td>{{game.cell_list[4].spaces[1]}}</td>
-                <td>{{game.cell_list[4].spaces[2]}}</td>
-                <td>{{game.cell_list[4].spaces[3]}}</td>
-                <td>{{game.cell_list[5].spaces[1]}}</td>
-                <td>{{game.cell_list[5].spaces[2]}}</td>
-                <td>{{game.cell_list[5].spaces[3]}}</td>
-                <td>{{game.cell_list[6].spaces[1]}}</td>
-                <td>{{game.cell_list[6].spaces[2]}}</td>
-                <td>{{game.cell_list[6].spaces[3]}}</td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[7].spaces[1]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[7].spaces[2]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[7].spaces[3]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[8].spaces[1]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[8].spaces[2]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[8].spaces[3]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[9].spaces[1]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[9].spaces[2]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[9].spaces[3]}}</p></td>
             </tr>
             <tr>
-                <td>{{game.cell_list[1].spaces[7]}}</td>
-                <td>{{game.cell_list[1].spaces[8]}}</td>
-                <td>{{game.cell_list[1].spaces[9]}}</td>
-                <td>{{game.cell_list[2].spaces[7]}}</td>
-                <td>{{game.cell_list[2].spaces[8]}}</td>
-                <td>{{game.cell_list[2].spaces[9]}}</td>
-                <td>{{game.cell_list[3].spaces[7]}}</td>
-                <td>{{game.cell_list[3].spaces[8]}}</td>
-                <td>{{game.cell_list[3].spaces[9]}}</td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[4].spaces[7]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[4].spaces[8]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[4].spaces[9]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[5].spaces[7]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[5].spaces[8]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[5].spaces[9]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[6].spaces[7]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[6].spaces[8]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[6].spaces[9]}}</p></td>
             </tr>
             <tr>
-                <td>{{game.cell_list[1].spaces[4]}}</td>
-                <td>{{game.cell_list[1].spaces[5]}}</td>
-                <td>{{game.cell_list[1].spaces[6]}}</td>
-                <td>{{game.cell_list[2].spaces[4]}}</td>
-                <td>{{game.cell_list[2].spaces[5]}}</td>
-                <td>{{game.cell_list[2].spaces[6]}}</td>
-                <td>{{game.cell_list[3].spaces[4]}}</td>
-                <td>{{game.cell_list[3].spaces[5]}}</td>
-                <td>{{game.cell_list[3].spaces[6]}}</td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[4].spaces[4]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[4].spaces[5]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[4].spaces[6]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[5].spaces[4]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[5].spaces[5]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[5].spaces[6]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[6].spaces[4]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[6].spaces[5]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[6].spaces[6]}}</p></td>
             </tr>
             <tr>
-                <td>{{game.cell_list[1].spaces[1]}}</td>
-                <td>{{game.cell_list[1].spaces[2]}}</td>
-                <td>{{game.cell_list[1].spaces[3]}}</td>
-                <td>{{game.cell_list[2].spaces[1]}}</td>
-                <td>{{game.cell_list[2].spaces[2]}}</td>
-                <td>{{game.cell_list[2].spaces[3]}}</td>
-                <td>{{game.cell_list[3].spaces[1]}}</td>
-                <td>{{game.cell_list[3].spaces[2]}}</td>
-                <td>{{game.cell_list[3].spaces[3]}}</td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[4].spaces[1]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[4].spaces[2]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[4].spaces[3]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[5].spaces[1]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[5].spaces[2]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[5].spaces[3]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[6].spaces[1]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[6].spaces[2]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[6].spaces[3]}}</p></td>
+            </tr>
+            <tr>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[1].spaces[7]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[1].spaces[8]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[1].spaces[9]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[2].spaces[7]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[2].spaces[8]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[2].spaces[9]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[3].spaces[7]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[3].spaces[8]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[3].spaces[9]}}</p></td>
+            </tr>
+            <tr>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[1].spaces[4]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[1].spaces[5]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[1].spaces[6]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[2].spaces[4]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[2].spaces[5]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[2].spaces[6]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[3].spaces[4]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[3].spaces[5]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[3].spaces[6]}}</p></td>
+            </tr>
+            <tr>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[1].spaces[1]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[1].spaces[2]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[1].spaces[3]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[2].spaces[1]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[2].spaces[2]}}</p></td>
+                <td class="ultimate_td_light"><p class="ultimate_p">{{game.cell_list[2].spaces[3]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[3].spaces[1]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[3].spaces[2]}}</p></td>
+                <td class="ultimate_td_dark"><p class="ultimate_p">{{game.cell_list[3].spaces[3]}}</p></td>
             </tr>
         </table>
     </div>
