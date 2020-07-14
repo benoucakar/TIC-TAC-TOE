@@ -8,9 +8,13 @@ user_tracker = User_tracker()
 data_manager = Data_manager(DATOTEKA_STANJA)
 
 def check_user_id():
-    """Če uporabnik pride na katero izmed strani in še nima indeksa, ga preusmerimo na index.html"""
-    if bottle.request.get_cookie(COOKIE, secret=SECRET) == None:
+    """Če uporabnik pride na katero izmed strani in še nima indeksa ali iger, ga preusmerimo na index.html"""
+    user_id = bottle.request.get_cookie(COOKIE, secret=SECRET)
+    if user_id == None:
         bottle.redirect("/")
+    else:
+        if not int(user_id) in user_tracker.users:
+            bottle.redirect("/")
 
 # Prva stran in dodelitev piškotkov.
 
@@ -59,6 +63,7 @@ def statistika():
 @bottle.post("/igre/vanila_1/")
 def vanila_1_post():
     """Igre običajnih križcev in krožcev za enega igralca."""
+    check_user_id()
     # Poiščemo igro trenutnega igralca.
     user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
     vanila_1 = user_tracker.users[user_id][0]
@@ -116,6 +121,7 @@ def vanila_1_get():
 @bottle.post("/igre/vanila_2/")
 def vanila_2_post():
     """Igre običajnih križcev in krožcev za dva igralca."""
+    check_user_id()
     # Poiščemo igro trenutnega igralca.
     user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
     vanila_2 = user_tracker.users[user_id][1]
@@ -163,6 +169,7 @@ def vanila_2_get():
 @bottle.post("/igre/ultimate_1/")
 def ultimate_1_post():
     """Igre ultimativnih križcev in krožcev za enega igralca."""
+    check_user_id()
     # Poiščemo igro trenutnega igralca.
     user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
     ultimate_1 = user_tracker.users[user_id][2]
@@ -256,6 +263,7 @@ def ultimate_1_get():
 @bottle.post("/igre/ultimate_2/")
 def ultimate_2_post():
     """Igre ultimativnih križcev in krožcev za dva igralca."""
+    check_user_id()
     # Poiščemo igro trenutnega igralca.
     user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
     ultimate_2 = user_tracker.users[user_id][3]
