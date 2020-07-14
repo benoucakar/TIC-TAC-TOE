@@ -331,7 +331,7 @@ class Ultimate_2:
 
 class Ultimate_1:
     """Ultimativni križci in krožci za enega igralca.
-    "P" - začetek igra, "I" - prva poterza, "M" - glavni del igre, "E" - konec igre."""
+    "P" - začetek igra, "M" - glavni del igre, "E" - konec igre."""
     def __init__(self):
         self.master_cell = Cell()
         self.cell1 = Cell()
@@ -346,7 +346,10 @@ class Ultimate_1:
         self.cell_list = ["&", self.cell1, self.cell2, self.cell3, self.cell4, self.cell5, self.cell6, self.cell7, self.cell8, self.cell9]
         self.num_master_turns = 0
         self.state = "P"
-        self.move_in_big_cell = False
+        self.move_in_big_cell = True
+        self.inp_cell = 0
+        self.inp_space = 0
+        self.last_inp_cell = 0
 
     def choose_parameters(self, player_mark, player_turn):
         """Določi parametre, ki si jih izbere igralec."""
@@ -354,16 +357,6 @@ class Ultimate_1:
         self.player_turn = player_turn
         self.master_bot = Bot(self.player_mark, not self.player_turn)
         self.current_mark = self.player_mark if self.player_turn else self.master_cell.sign_switch(self.player_mark)
-
-    def initial_move(self, inp_cell, inp_space):
-        """Naredi prvo potezo."""
-        self.inp_cell = inp_cell
-        self.inp_space = inp_space
-        self.cell_list[self.inp_cell].mark_field(self.inp_space, self.current_mark)
-        self.last_inp_cell = self.inp_cell
-        self.inp_cell = self.inp_space
-        self.current_mark = self.master_cell.sign_switch(self.current_mark)
-        self.player_turn = not self.player_turn
 
     def move_in_small_cell(self, current_cell):
         """Naredi potezo v celici."""
@@ -396,7 +389,10 @@ class Ultimate_1:
         self.cell_list = ["&", self.cell1, self.cell2, self.cell3, self.cell4, self.cell5, self.cell6, self.cell7, self.cell8, self.cell9]
         self.num_master_turns = 0
         self.state = "P"
-        self.move_in_big_cell = False
+        self.move_in_big_cell = True
+        self.inp_cell = 0
+        self.inp_space = 0
+        self.last_inp_cell = 0
 
 class User_tracker:
     """Funkcije, ki sledijo uporabnikom."""

@@ -156,27 +156,16 @@ def ultimate_1_post():
     user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
     ultimate_1 = user_tracker.users[user_id][2]
     if ultimate_1.state == "P":
-        # Določimo začetne parametre.
+        # Določimo začetne parametre in bot naredi morebitno prvo potezo.
         player_mark = bottle.request.forms.getunicode('player_mark')
         player_turn = bool(bottle.request.forms.getunicode('player_turn'))
         ultimate_1.choose_parameters(player_mark, player_turn)
-        if player_turn:
-            ultimate_1.state = "I"
-        else:
-            inp_cell = ultimate_1.master_cell.random_free()
-            inp_space = ultimate_1.cell_list[inp_cell].random_free()
-            ultimate_1.initial_move(inp_cell, inp_space)
-            ultimate_1.state = "M"
-        bottle.redirect("/igre/ultimate_1/")
-    
-    elif ultimate_1.state == "I":
-        # Naredimo prvo potezo.
-        inp_cell = int(bottle.request.forms.getunicode('inp_cell'))
-        inp_space = int(bottle.request.forms.getunicode('inp_space'))
-        ultimate_1.initial_move(inp_cell, inp_space)
-        current_cell = ultimate_1.cell_list[ultimate_1.inp_cell]
-        ultimate_1.inp_space = ultimate_1.master_bot.ultimate_incell_move(ultimate_1.cell_list, ultimate_1.inp_cell)
-        ultimate_1.move_in_small_cell(current_cell)
+        if not player_turn:
+            ultimate_1.inp_cell = ultimate_1.master_cell.random_free()
+            ultimate_1.inp_space = ultimate_1.cell_list[ultimate_1.inp_cell].random_free()
+            current_cell = ultimate_1.cell_list[ultimate_1.inp_cell]
+            ultimate_1.move_in_big_cell = False
+            ultimate_1.move_in_small_cell(current_cell)
         ultimate_1.state = "M"
         bottle.redirect("/igre/ultimate_1/")
 
