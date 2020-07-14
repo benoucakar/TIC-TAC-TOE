@@ -208,7 +208,8 @@ class Bot:
             return kand
 
 class Vanila_2:
-    """Običajni križci in krožci za dva igralca."""
+    """Običajni križci in krožci za dva igralca.
+    "P" - začetek igra, "M" - glavni del igre, "E" - konec igre."""
     def __init__(self):
         self.cell = Cell()
         self.num_turns = 0
@@ -231,7 +232,8 @@ class Vanila_2:
         self.state = "P"
 
 class Vanila_1:
-    """Običajni križci in krožci za enega igralca."""
+    """Običajni križci in krožci za enega igralca.
+    "P" - začetek igra, "M" - glavni del igre, "E" - konec igre."""
     def __init__(self):
         self.cell = Cell()
         self.num_turns = 0
@@ -270,7 +272,8 @@ class Vanila_1:
         self.state = "P"
 
 class Ultimate_2:
-    """Ultimativni križci in krožci za dva igralca."""
+    """Ultimativni križci in krožci za dva igralca.
+    "P" - začetek igra, "I" - prva poterza, "M" - glavni del igre, "E" - konec igre."""
     def __init__(self):
         self.master_cell = Cell()
         self.cell1 = Cell()
@@ -331,7 +334,8 @@ class Ultimate_2:
         self.move_in_big_cell = False
 
 class Ultimate_1:
-    """Ultimativni križci in krožci za enega igralca."""
+    """Ultimativni križci in krožci za enega igralca.
+    "P" - začetek igra, "I" - prva poterza, "M" - glavni del igre, "E" - konec igre."""
     def __init__(self):
         self.master_cell = Cell()
         self.cell1 = Cell()
