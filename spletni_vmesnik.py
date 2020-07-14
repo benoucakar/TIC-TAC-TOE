@@ -109,12 +109,13 @@ def vanila_2_post():
     # Poiščemo igro trenutnega igralca.
     user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
     vanila_2 = user_tracker.users[user_id][1]
-    
+
     if vanila_2.state == "P":
         # Določimo začetne parametre.
         vanila_2.choose_parameters(bottle.request.forms.getunicode('player_mark'))
         vanila_2.state = "M"
         bottle.redirect("/igre/vanila_2/")
+
     elif vanila_2.state == "M":
         # Naredimo potezo.
         inp_space = int(bottle.request.forms.getunicode('inp_space'))
@@ -124,6 +125,7 @@ def vanila_2_post():
         else:
             vanila_2.state = "E"
         bottle.redirect("/igre/vanila_2/")
+
     elif vanila_2.state == "E":
         # Posodobimo statistične podatke in ponastavimo igro.
         data_manager.data["ended_V2"] += 1
@@ -172,7 +174,6 @@ def ultimate_1_post():
         inp_cell = int(bottle.request.forms.getunicode('inp_cell'))
         inp_space = int(bottle.request.forms.getunicode('inp_space'))
         ultimate_1.initial_move(inp_cell, inp_space)
-
         current_cell = ultimate_1.cell_list[ultimate_1.inp_cell]
         ultimate_1.inp_space = ultimate_1.master_bot.ultimate_incell_move(ultimate_1.cell_list, ultimate_1.inp_cell)
         ultimate_1.move_in_small_cell(current_cell)
@@ -202,9 +203,7 @@ def ultimate_1_post():
                 else:
                     bottle.redirect("/igre/ultimate_1/")
 
-        if ultimate_1.master_cell.spaces[ultimate_1.inp_cell] == ".":
-            None
-        else:
+        if ultimate_1.master_cell.spaces[ultimate_1.inp_cell] != ".":
             ultimate_1.move_in_big_cell = True
 
         if not ultimate_1.master_cell.check_win() and ultimate_1.num_master_turns < 9:
@@ -218,16 +217,13 @@ def ultimate_1_post():
                     ultimate_1.inp_cell = ultimate_1.master_cell.random_free()
                     ultimate_1.move_in_big_cell = False
                 
-            if ultimate_1.master_cell.spaces[ultimate_1.inp_cell] == ".":
-                None
-            else:
+            if ultimate_1.master_cell.spaces[ultimate_1.inp_cell] != ".":
                 ultimate_1.move_in_big_cell = True
             
             if not ultimate_1.master_cell.check_win() and ultimate_1.num_master_turns < 9:
                 None
             else:
                 ultimate_1.state = "E"
-
         else:
             ultimate_1.state = "E"
         bottle.redirect("/igre/ultimate_1/")
@@ -244,7 +240,6 @@ def ultimate_1_post():
         elif not ultimate_1.master_cell.check_win():
             data_manager.data["ended_draw"] += 1
         data_manager.dump_data_to_file()
-
         ultimate_1.reset()
         bottle.redirect("/igre/")
 
@@ -289,9 +284,7 @@ def ultimate_2_post():
             ultimate_2.inp_cell = int(bottle.request.forms.getunicode('inp_cell'))
             ultimate_2.move_in_big_cell = False
 
-        if ultimate_2.master_cell.spaces[ultimate_2.inp_cell] == ".":
-            None
-        else:
+        if ultimate_2.master_cell.spaces[ultimate_2.inp_cell] != ".":
             ultimate_2.move_in_big_cell = True
 
         if not ultimate_2.master_cell.check_win() and ultimate_2.num_master_turns < 9:
