@@ -1,20 +1,60 @@
+<style>
+    .vanila_td {
+        width: 120px;
+        height: 120px;
+        padding: 5px;
+        text-align: center;
+        background-color: hsl(0, 0%, 96%);
+        border: 5px solid hsl(0, 0%, 48%);
+    }
+
+    #vanila_table {
+        margin-top: 10px;
+    }
+
+    .vanila_p {
+        text-align: center;
+        font-size: 60px;
+        font-weight: bold;
+        padding: 5px;
+    }
+</style>
+
 <div class="container">
     <div class="columns is-centered">
-        <table table class="table is-bordered is-centered">
+        <table id="vanila_table">
             <tr>
-                <td>{{game.cell.spaces[7]}}</td>
-                <td>{{game.cell.spaces[8]}}</td>
-                <td>{{game.cell.spaces[9]}}</td>
+                <td class="vanila_td">
+                    <p class="vanila_p">{{game.cell.spaces[7]}}</p>
+                </td>
+                <td class="vanila_td">
+                    <p class="vanila_p">{{game.cell.spaces[8]}}</p>
+                </td>
+                <td class="vanila_td">
+                    <p class="vanila_p">{{game.cell.spaces[9]}}</p>
+                </td>
             </tr>
             <tr>
-                <td>{{game.cell.spaces[4]}}</td>
-                <td>{{game.cell.spaces[5]}}</td>
-                <td>{{game.cell.spaces[6]}}</td>
+                <td class="vanila_td">
+                    <p class="vanila_p">{{game.cell.spaces[4]}}</p>
+                </td>
+                <td class="vanila_td">
+                    <p class="vanila_p">{{game.cell.spaces[5]}}</p>
+                </td>
+                <td class="vanila_td">
+                    <p class="vanila_p">{{game.cell.spaces[6]}}</p>
+                </td>
             </tr>
             <tr>
-                <td>{{game.cell.spaces[1]}}</td>
-                <td>{{game.cell.spaces[2]}}</td>
-                <td>{{game.cell.spaces[3]}}</td>
+                <td class="vanila_td">
+                    <p class="vanila_p">{{game.cell.spaces[1]}}</p>
+                </td>
+                <td class="vanila_td">
+                    <p class="vanila_p">{{game.cell.spaces[2]}}</p>
+                </td>
+                <td class="vanila_td">
+                    <p class="vanila_p">{{game.cell.spaces[3]}}</p>
+                </td>
             </tr>
         </table>
     </div>
