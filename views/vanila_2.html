@@ -5,7 +5,7 @@
     <div class="tile is-ancestor">
         <div class="tile is-6 is-vertical is-parent">
             <div class="tile is-child box">
-                <h1 class="title has-text-centered">Dobrodošli v obicajni igri križcev in krožcev za dve osebi.</h1>
+                <h1 class="title has-text-centered">Dobrodošli v obicajni igri križcev in krožcev za dve osebi</h1>
             </div>
             <div class="tile is-child box">
                 <div class="content is-large">
@@ -64,7 +64,7 @@
             % if game.cell.check_win():
             <h1 class="title has-text-centered">Čestitke {{game.cell.sign_switch(game.mark)}}!</h1>
             % else:
-            <h1 class="title has-text-centered">Igra je neodločena.</h1>
+            <h1 class="title has-text-centered">Igra je neodločena</h1>
             % end
             <form action="/igre/vanila_2/" method="post">
                 <div class="buttons is-centered">
