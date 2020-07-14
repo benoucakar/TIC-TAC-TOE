@@ -7,6 +7,11 @@ SECRET = "Zemlja je torus."
 user_tracker = User_tracker()
 data_manager = Data_manager(DATOTEKA_STANJA)
 
+def check_user_id():
+    """Če uporabnik pride na katero izmed strani in še nima indeksa, ga preusmerimo na index.html"""
+    if bottle.request.get_cookie(COOKIE, secret=SECRET) == None:
+        bottle.redirect("/")
+
 # Prva stran in dodelitev piškotkov.
 
 @bottle.get("/")
@@ -26,21 +31,25 @@ def new_user():
 @bottle.get("/domov/")
 def domov():
     """Preusmeri na index.html"""
+    check_user_id()
     return bottle.template("domov.html")
 
 @bottle.get("/igre/")
 def igra():
     """Preusmeri na igre.html"""
+    check_user_id()
     return bottle.template("igre.html")
 
 @bottle.get("/pravila/")
 def pravila():
     """Preusmeri na pravila.html"""
+    check_user_id()
     return bottle.template("pravila.html")
 
 @bottle.get("/statistika/")
 def statistika():
     """Posodobi podatke in preusmeri na statistika.html"""
+    check_user_id()
     data_manager.load_data_from_file()
     data_manager.data_for_stats()
     return bottle.template("statistika.html", data_manager=data_manager)
@@ -97,6 +106,7 @@ def vanila_1_post():
 @bottle.get("/igre/vanila_1/")
 def vanila_1_get():
     """Preusmeri na vanila_1.html"""
+    check_user_id()
     user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
     vanila_1 = user_tracker.users[user_id][0]
     return bottle.template("vanila_1.html", game=vanila_1)
@@ -143,6 +153,7 @@ def vanila_2_post():
 @bottle.get("/igre/vanila_2/")
 def vanila_2_get():
     """Preusmeri na vanila_2.html"""
+    check_user_id()
     user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
     vanila_2 = user_tracker.users[user_id][1]
     return bottle.template("vanila_2.html", game=vanila_2)
@@ -235,6 +246,7 @@ def ultimate_1_post():
 @bottle.get("/igre/ultimate_1/")
 def ultimate_1_get():
     """Preusmeri na ultimate_1.html"""
+    check_user_id()
     user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
     ultimate_1 = user_tracker.users[user_id][2]
     return bottle.template("ultimate_1.html", game=ultimate_1)
@@ -291,6 +303,7 @@ def ultimate_2_post():
 @bottle.get("/igre/ultimate_2/")
 def ultimate_2_get():
     """Preusmeri na ultimate_2.html"""
+    check_user_id()
     user_id = int(bottle.request.get_cookie(COOKIE, secret=SECRET))
     ultimate_2 = user_tracker.users[user_id][3]
     return bottle.template("ultimate_2.html", game=ultimate_2)
