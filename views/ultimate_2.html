@@ -1,52 +1,98 @@
 % rebase("base.html", izbrani_zavihek="igre", prikaz_naslova = False)
 
 % if game.state == "P":
-
-<h1>Dobrodošli v igri ultimativnih križcev in krožcev za dve osebi</h1>
-<p>Prosim izberite, znak prvega igralca.</p>
-<form action="/igre/ultimate_2/" method="post">
-    <input type="radio" id="X" name="first_player_mark" value="X" required>
-    <label for="X">X</label><br>
-    <input type="radio" id="O" name="first_player_mark" value="O" required>
-    <label for="O">O</label><br>
-    <button type="submit">Pa začnimo!</button>
-</form>
-
+<div class="column is-12 is-offset-one-quarter">
+    <div class="tile is-ancestor">
+        <div class="tile is-6 is-vertical is-parent">
+            <div class="tile is-child box">
+                <h1 class="title has-text-centered">Dobrodošli v igri ultimativnih križcev in krožcev za dve osebi</h1>
+            </div>
+            <div class="tile is-child box">
+                <div class="content is-large">
+                    <form action="/igre/ultimate_2/" method="post">
+                        <p class="subtitle is-size-4 has-text-centered">Prosim izberite znak prvega igralca:</p>
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <div>
+                                        <p class="has-text-centered">
+                                            <label for="X"><b>X</b></label>
+                                            <input type="radio" id="X" name="first_player_mark" value="X" required>
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="has-text-centered">
+                                        <label for="O"><b>O</b></label>
+                                        <input type="radio" id="O" name="first_player_mark" value="O" required>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="buttons is-centered">
+                            <button type="submit" class="button is-link is-medium">Pa začnimo!</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 % elif game.state == "M" and not game.move_in_big_cell:
-<h1>{{game.mark}} Izberi polje v celici {{game.inp_cell}}</h1>
-% include("_prikaz_ultimate.html", game=game)
-<form action="/igre/ultimate_2/" method="post">
-    <h1>Polje</h1>
-    %for i in range(1,10):
-    <input type="radio" id="i" name="inp_space" value={{i}} required>
-    <label for="i">{{i}}</label><br>
-    %end
-    <button type="submit">Ugibaj</button>
-</form>
-
+<div class="tile is-ancestor">
+    <div class="tile is-4 is-vertical is-parent">
+        <div class="tile is-child box">
+            <h1 class="title has-text-centered">{{game.mark}} izberi polje v celici {{game.inp_cell}}</h1>
+        </div>
+        <div class="tile is-child box">
+            % include("_tipkovnica.html", output="inp_space", adress="/igre/ultimate_2/")
+        </div>
+    </div>
+    <div class="tile is-8 is-parent">
+        <div class="tile is-child box">
+            % include("_prikaz_ultimate.html", game=game)
+        </div>
+    </div>
+</div>
 % elif game.state == "M" and game.move_in_big_cell:
-
-<h1>{{game.mark}} Izberi poljubno celico.</h1>
-% include("_prikaz_ultimate.html", game=game)
-<form action="/igre/ultimate_2/" method="post">
-    <h1>Celica</h1>
-    %for i in range(1,10):
-    <input type="radio" id="i" name="inp_cell" value={{i}} required>
-    <label for="i">{{i}}</label><br>
-    %end
-    <button type="submit">Ugibaj</button>
-</form>
-
+<div class="tile is-ancestor">
+    <div class="tile is-4 is-vertical is-parent">
+        <div class="tile is-child box">
+            <h1 class="title has-text-centered">{{game.mark}} izberi poljubno celico</h1>
+        </div>
+        <div class="tile is-child box">
+            % include("_tipkovnica.html", output="inp_cell", adress="/igre/ultimate_2/")
+        </div>
+    </div>
+    <div class="tile is-8 is-parent">
+        <div class="tile is-child box">
+            % include("_prikaz_ultimate.html", game=game)
+        </div>
+    </div>
+</div>
 % elif game.state == "E":
-<h1>Igre je konec.</h1>
-% include("_prikaz_ultimate.html", game=game)
-% if game.master_cell.check_win():
-<h1>Čestitke {{game.master_cell.sign_switch(game.mark)}}</h1>
-% else:
-<h1>Igra je neodločena.</h1>
-% end
-<form action="/igre/ultimate_2/" method="post">
-    <button type="submit">Zaključi z igro</button>
-</form>
-
+<div class="tile is-ancestor">
+    <div class="tile is-4 is-vertical is-parent">
+        <div class="tile is-child box">
+            <h1 class="title has-text-centered">Igre je konec</h1>
+        </div>
+        <div class="tile is-child box">
+            % if game.master_cell.check_win():
+            <h1 class="title has-text-centered">Čestitke {{game.master_cell.sign_switch(game.mark)}}!</h1>
+            % else:
+            <h1 class="title has-text-centered">Igra je neodločena</h1>
+            % end
+            <form action="/igre/ultimate_2/" method="post">
+                <div class="buttons is-centered">
+                    <button type="submit" class="button is-link is-medium">Zaključi z igro</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="tile is-8 is-parent">
+        <div class="tile is-child box">
+            % include("_prikaz_ultimate.html", game=game)
+        </div>
+    </div>
+</div>
 % end
