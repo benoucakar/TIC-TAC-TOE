@@ -5,12 +5,12 @@
     <div class="tile is-ancestor">
         <div class="tile is-6 is-vertical is-parent">
             <div class="tile is-child box">
-                <h1 class="title has-text-centered">Dobrodošli v obicajni igri križcev in krožcev za dve osebi</h1>
+                <h1 class="title has-text-centered">Dobrodošli v običajni igri križcev in krožcev za dve osebi.</h1>
             </div>
             <div class="tile is-child box">
                 <div class="content is-large">
                     <form action="/igre/vanila_2/" method="post">
-                        <p class="subtitle is-size-4 has-text-centered">Prosim izberite znak prvega igralca:</p>
+                        <p class="subtitle is-size-4 has-text-centered">Prosim, izberite znak prvega igralca:</p>
                             <table class="table">
                                 <tr>
                                     <td>
@@ -42,7 +42,7 @@
 <div class="tile is-ancestor">
     <div class="tile is-4 is-vertical is-parent">
         <div class="tile is-child box">
-            <h1 class="title has-text-centered">{{game.mark}} je na potezi</h1>
+            <h1 class="title has-text-centered">{{game.mark}} je na potezi.</h1>
         </div>
         <div class="tile is-child box">
             % include("_tipkovnica.html", output="inp_space", adress="/igre/vanila_2/")
@@ -58,13 +58,13 @@
 <div class="tile is-ancestor">
     <div class="tile is-4 is-vertical is-parent">
         <div class="tile is-child box">
-            <h1 class="title has-text-centered">Igre je konec</h1>
+            <h1 class="title has-text-centered">Igre je konec.</h1>
         </div>
         <div class="tile is-child box">
             % if game.cell.check_win():
             <h1 class="title has-text-centered">Čestitke {{game.cell.sign_switch(game.mark)}}!</h1>
             % else:
-            <h1 class="title has-text-centered">Igra je neodločena</h1>
+            <h1 class="title has-text-centered">Igra je neodločena.</h1>
             % end
             <form action="/igre/vanila_2/" method="post">
                 <div class="buttons is-centered">

@@ -22,7 +22,7 @@ class Cell:
 
     def O_graphic(self):
         """Izriše O v celici."""
-        self.spaces = {1 : "\\", 2 : "-", 3 : "/", 4 : "|", 5 : " ", 6 : "|", 7 : "/", 8 : "-", 9 : "\\"}
+        self.spaces = {1 : "\\", 2 : "―", 3 : "/", 4 : "|", 5 : " ", 6 : "|", 7 : "/", 8 : "―", 9 : "\\"}
     
     def print_sign_graphic(self, sign):
         """Pomožna metoda za označevanje polja."""
