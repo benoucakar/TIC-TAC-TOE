@@ -273,7 +273,7 @@ class Vanila_1:
 
 class Ultimate_2:
     """Ultimativni križci in krožci za dva igralca.
-    "P" - začetek igra, "I" - prva poterza, "M" - glavni del igre, "E" - konec igre."""
+    "P" - začetek igra, "M" - glavni del igre, "E" - konec igre."""
     def __init__(self):
         self.master_cell = Cell()
         self.cell1 = Cell()
@@ -288,19 +288,13 @@ class Ultimate_2:
         self.cell_list = ["&", self.cell1, self.cell2, self.cell3, self.cell4, self.cell5, self.cell6, self.cell7, self.cell8, self.cell9]
         self.num_master_turns = 0
         self.state = "P"
-        self.move_in_big_cell = False
+        self.move_in_big_cell = True
+        self.inp_cell = 0
+        self.inp_space = 0
 
     def choose_parameters(self, first_player_mark):
         """Določi parametre, ki si jih izbere igralec."""
         self.mark = first_player_mark
-
-    def initial_move(self, inp_cell, inp_space):
-        """Naredi prvo potezo."""
-        self.inp_cell = inp_cell
-        self.inp_space = inp_space
-        self.cell_list[self.inp_cell].mark_field(self.inp_space, self.mark)
-        self.inp_cell = self.inp_space
-        self.mark = self.master_cell.sign_switch(self.mark)
     
     def move_in_small_cell(self, current_cell):
         """Naredi potezo v celici."""
@@ -331,7 +325,9 @@ class Ultimate_2:
         self.cell_list = ["&", self.cell1, self.cell2, self.cell3, self.cell4, self.cell5, self.cell6, self.cell7, self.cell8, self.cell9]
         self.num_master_turns = 0
         self.state = "P"
-        self.move_in_big_cell = False
+        self.move_in_big_cell = True
+        self.inp_cell = 0
+        self.inp_space = 0
 
 class Ultimate_1:
     """Ultimativni križci in krožci za enega igralca.

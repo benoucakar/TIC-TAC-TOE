@@ -263,14 +263,6 @@ def ultimate_2_post():
         # Določimo začetne parametre.
         first_player_mark = bottle.request.forms.getunicode('first_player_mark')
         ultimate_2.choose_parameters(first_player_mark)
-        ultimate_2.state = "I"
-        bottle.redirect("/igre/ultimate_2/")
-
-    elif ultimate_2.state == "I":
-        # Naredimo prvo potezo.
-        inp_cell = int(bottle.request.forms.getunicode('inp_cell'))
-        inp_space = int(bottle.request.forms.getunicode('inp_space'))
-        ultimate_2.initial_move(inp_cell, inp_space)
         ultimate_2.state = "M"
         bottle.redirect("/igre/ultimate_2/")
     
