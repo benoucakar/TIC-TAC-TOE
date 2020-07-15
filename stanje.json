@@ -1,1 +1,10 @@
-{"ended_V1": 25, "ended_V2": 21, "ended_U1": 14, "ended_U2": 11, "ended_draw": 9, "player_win_X": 33, "player_win_O": 18, "player_beat_bot": 24}
+{
+    "ended_V1": 25,
+    "ended_V2": 21,
+    "ended_U1": 15,
+    "ended_U2": 11,
+    "ended_draw": 9,
+    "player_win_X": 34,
+    "player_win_O": 18,
+    "player_beat_bot": 25
+}
