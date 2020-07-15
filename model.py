@@ -217,12 +217,12 @@ class Vanila_2:
 
     def choose_parameters(self, first_player_mark):
         """Določi parametre, ki si jih izbere igralec."""
-        self.mark = first_player_mark
+        self.current_mark = first_player_mark
     
     def make_move(self, inp_space):
         """Naredi potezo."""
-        if self.cell.mark_field(inp_space, self.mark):
-            self.mark = self.cell.sign_switch(self.mark)
+        if self.cell.mark_field(inp_space, self.current_mark):
+            self.current_mark = self.cell.sign_switch(self.current_mark)
             self.num_turns += 1
 
     def reset(self):
@@ -294,21 +294,21 @@ class Ultimate_2:
 
     def choose_parameters(self, first_player_mark):
         """Določi parametre, ki si jih izbere igralec."""
-        self.mark = first_player_mark
+        self.current_mark = first_player_mark
     
     def move_in_small_cell(self, current_cell):
         """Naredi potezo v celici."""
-        if current_cell.mark_field(self.inp_space, self.mark):
+        if current_cell.mark_field(self.inp_space, self.current_mark):
             if current_cell.check_win():
-                self.master_cell.mark_field(self.inp_cell, self.mark)
+                self.master_cell.mark_field(self.inp_cell, self.current_mark)
                 self.num_master_turns += 1
-                current_cell.print_sign_graphic(self.mark)
+                current_cell.print_sign_graphic(self.current_mark)
             elif current_cell.check_draw():
                 self.master_cell.mark_field(self.inp_cell, "+")
                 self.num_master_turns += 1
                 current_cell.Draw_graphic()
             self.inp_cell = self.inp_space
-            self.mark = self.master_cell.sign_switch(self.mark)
+            self.current_mark = self.master_cell.sign_switch(self.current_mark)
 
     def reset(self):
         """Ponastavi parametre."""

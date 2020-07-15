@@ -146,9 +146,9 @@ def vanila_2_post():
         # Posodobimo statistične podatke in ponastavimo igro.
         data_manager.data["ended_V2"] += 1
         if vanila_2.cell.check_win():
-            if vanila_2.mark == "X":
+            if vanila_2.current_mark == "X":
                 data_manager.data["player_win_O"] += 1
-            elif vanila_2.mark == "O":
+            elif vanila_2.current_mark == "O":
                 data_manager.data["player_win_X"] += 1
         else:
             data_manager.data["ended_draw"] += 1
@@ -298,9 +298,9 @@ def ultimate_2_post():
         # Posodobimo statistične podatke in ponastavimo igro.
         data_manager.data["ended_U2"] += 1
         if ultimate_2.master_cell.check_win():
-            if ultimate_2.mark == "X":
+            if ultimate_2.current_mark == "X":
                 data_manager.data["player_win_O"] += 1
-            elif ultimate_2.mark == "O":
+            elif ultimate_2.current_mark == "O":
                 data_manager.data["player_win_X"] += 1
         else:
             data_manager.data["ended_draw"] += 1
